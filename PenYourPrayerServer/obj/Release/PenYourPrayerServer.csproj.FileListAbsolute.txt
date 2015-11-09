@@ -1,0 +1,14 @@
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\PenYourPrayerServer.dll.config
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\PenYourPrayerServer.dll
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\PenYourPrayerServer.pdb
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\Newtonsoft.Json.dll
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\System.Net.Http.Formatting.dll
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\System.Web.Http.dll
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\System.Web.Http.WebHost.dll
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\Newtonsoft.Json.xml
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\System.Net.Http.Formatting.xml
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\System.Web.Http.xml
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\bin\System.Web.Http.WebHost.xml
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\obj\Release\PenYourPrayerServer.csprojResolveAssemblyReference.cache
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\obj\Release\PenYourPrayerServer.dll
+D:\PenYourPrayerServer_custom\PenYourPrayerServer\obj\Release\PenYourPrayerServer.pdb

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="pypdb" Class="DBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=pypdb;User ID=pypdbuser" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PenYourPrayerDBConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.usp_AddNonce" Method="usp_AddNonce">
+    <Parameter Name="LoginType" Parameter="loginType" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="Username" Parameter="username" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RequestDate" Parameter="requestDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Nonce" Parameter="nonce" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(200)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_GetUserInformation" Method="usp_GetUserInformation">
+    <Parameter Name="LoginType" Parameter="loginType" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="usp_GetUserInformationResult">
+      <Column Name="LoginType" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ProfilePictureURL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MobilePlatform" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="PushNotificationID" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedWhen" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TouchedWhen" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="HMACHashKey" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Country" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Region" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddNewUser" Method="usp_AddNewUser">
+    <Parameter Name="LoginType" Parameter="loginType" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="UserName" Parameter="userName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="ProfilePictureURL" Parameter="profilePictureURL" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="MobilePlatform" Parameter="mobilePlatform" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="PushNotificationID" Parameter="pushNotificationID" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="HMACHashKey" Parameter="hMACHashKey" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="Country" Parameter="country" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Region" Parameter="region" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="City" Parameter="city" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(200)" Direction="InOut" />
+    <Parameter Name="ID" Parameter="iD" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_addLog" Method="usp_addLog">
+    <Parameter Name="value" Type="System.String" DbType="VarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

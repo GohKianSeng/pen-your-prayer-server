@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="pyptesting.com" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\PenYourPrayerServer_custom\\PenYourPrayerServer\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\PenYourPrayerServer_custom\\PenYourPrayerServer\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="PenYourPrayerDBConnectionString-Web.config Connection String" description="" value="Data Source=localhost;Initial Catalog=pypdb;User id=pypdbuser;yWqikr1981" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\PenYourPrayerServer_custom\\PenYourPrayerServer\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='PenYourPrayerDBConnectionString']/@connectionString" />
+  </parameter>
+</parameters>

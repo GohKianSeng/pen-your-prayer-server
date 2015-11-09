@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="PenYourPrayerDBConnectionString-Web.config Connection String" description="PenYourPrayerDBConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=localhost;Initial Catalog=pypdb;User Id=pypdbuser;Password=yWqikr1981" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\PenYourPrayerServer_custom\\PenYourPrayerServer\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='PenYourPrayerDBConnectionString']/@connectionString" />
+  </parameter>
+</parameters>
