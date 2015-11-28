@@ -16,8 +16,8 @@ namespace PenYourPrayerServer.Controllers
     [RoutePrefix("api/UserAccount")]
     public class UserAccountController : ApiController
     {
-        // GET: api/UserAccount/5
-        public HttpResponseMessage Get(String LoginType, String UserName, bool checkExist)
+        [Route("CheckUserNameExists")]
+        public HttpResponseMessage CheckUserNameExists(String LoginType, String UserName)
         {
             using (DBDataContext db = new DBDataContext())
             {
@@ -32,8 +32,9 @@ namespace PenYourPrayerServer.Controllers
                 }
             }
         }
-        
-        public HttpResponseMessage Post(string LoginType, string UserName, string Name, string ProfilePictureURL, string Password, string MobilePlatform, string PushNotificationID,
+
+        [Route("RegisterNewUser")]
+        public HttpResponseMessage RegisterNewUser(string LoginType, string UserName, string Name, string ProfilePictureURL, string Password, string MobilePlatform, string PushNotificationID,
                                         string Country, string Region, string City)
         {
             PenYourPrayerUser user = new PenYourPrayerUser();
@@ -53,28 +54,70 @@ namespace PenYourPrayerServer.Controllers
                 string result = "";
                 string HMACSecretKey = CustomPasswordHasher.HashPassword(Guid.NewGuid().ToString()) + CustomPasswordHasher.HashPassword(Guid.NewGuid().ToString());
                 long? id = -1;
-                db.usp_AddNewUser(user.LoginType, user.UserName, user.DisplayName, user.ProfilePictureURL, user.Password, user.MobilePlatform, user.PushNotificationID, HMACSecretKey, user.Country, user.Region, user.City, ref result, ref id);
+                string verificationCode = "";
+                db.usp_AddNewUser(user.LoginType, user.UserName, user.DisplayName, user.ProfilePictureURL, user.Password, user.MobilePlatform, user.PushNotificationID, HMACSecretKey, user.Country, user.Region, user.City, ref result, ref id, ref verificationCode);
                 user.Id = (long)id;
 
                 if (result.ToUpper() != "OK")
-                {
+                {                    
                     return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = result });
-
                 }
                 //send email to verify email address.
+                CommonMethod.sendAccountActiviationEmail(user.UserName, user.DisplayName, verificationCode, user.Id.ToString());
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK });
 
             }
         }
 
-        [AllowAnonymous]
+        [Route("ResendAccountActivation")]
+        public HttpResponseMessage ResendAccountActivation(String LoginType, String UserName)
+        {
+            using (DBDataContext db = new DBDataContext())
+            {
+                List<usp_GetUserActivationCodeResult> res = db.usp_GetUserActivationCode(LoginType, UserName).ToList();
+                if (res.Count() == 1)
+                {
+                    CommonMethod.sendAccountActiviationEmail(res.ElementAt(0).UserName, res.ElementAt(0).DisplayName, res.ElementAt(0).ActivationCode, res.ElementAt(0).ID.ToString());
+                    return Request.CreateResponse(HttpStatusCode.Accepted, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.Accepted, Description = "OK" });
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = "NOT EXISTS" });
+                }
+            }
+        }
+
+        [Route("ResetPassword")]
+        public HttpResponseMessage ResetPassword(String LoginType, String UserName)
+        {
+            using (DBDataContext db = new DBDataContext())
+            {
+                long? ID = 1;
+                string verficationCode = "";
+                string result = "";
+                string displayName = "";
+                db.usp_ResetPassword(LoginType, UserName, ref result, ref ID, ref verficationCode, ref displayName);
+
+                if (result == "OK")
+                {
+                    CommonMethod.sendResetPasswordEmail(UserName, displayName, verficationCode, ID.ToString());
+                    return Request.CreateResponse(HttpStatusCode.Accepted, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.Accepted, Description = "OK" });
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = "NOT EXISTS" });
+                }
+                
+            }
+        }
+
         [Route("Login")]
-        public HttpResponseMessage Login(string LoginType, string UserName, string Password, string AccessToken)
+        public HttpResponseMessage Login(string LoginType, string UserName, string Password_Secret, string AccessToken)
         {
             using (DBDataContext db = new DBDataContext())
             {
                 List<usp_GetUserInformationResult> res = db.usp_GetUserInformation(LoginType, UserName).ToList();
-                if (res.Count() > 0 && LoginType.ToUpper() == "EMAIL" && CustomPasswordHasher.VerifyHashedPassword(res.ElementAt(0).Password, Password))
+                if (res.Count() > 0 && LoginType.ToUpper() == "EMAIL" && CustomPasswordHasher.VerifyHashedPassword(res.ElementAt(0).Password, Password_Secret))
                 {
 
                     usp_GetUserInformationResult t = res.ElementAt(0);
@@ -87,6 +130,9 @@ namespace PenYourPrayerServer.Controllers
                     user.ProfilePictureURL = t.ProfilePictureURL;
                     user.PushNotificationID = t.PushNotificationID;
                     user.HMACHashKey = t.HMACHashKey;
+                    user.EmailVerification = t.EmailVerification;
+                    if (!t.EmailVerification)
+                        user.HMACHashKey = "";
                     return Request.CreateResponse(HttpStatusCode.OK, user);                        
                 }
                 else if (res.Count() > 0 && LoginType.ToUpper() == "FACEBOOK")
@@ -106,6 +152,6 @@ namespace PenYourPrayerServer.Controllers
                 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = "Invalid UserID/Password" });
             }
-        }
+        }        
     }
 }

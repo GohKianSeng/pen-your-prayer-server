@@ -1,0 +1,9 @@
+D:\PenYourPrayerServer_custom\Database1\bin\Debug\Database1.dacpac
+D:\PenYourPrayerServer_custom\Database1\bin\Debug\Database1.dll
+D:\PenYourPrayerServer_custom\Database1\bin\Debug\Database1.pdb
+D:\PenYourPrayerServer_custom\Database1\obj\Debug\Model.xml
+D:\PenYourPrayerServer_custom\Database1\obj\Debug\refactor.xml
+D:\PenYourPrayerServer_custom\Database1\obj\Debug\postdeploy.sql
+D:\PenYourPrayerServer_custom\Database1\obj\Debug\predeploy.sql
+D:\PenYourPrayerServer_custom\Database1\obj\Debug\Database1.dll
+D:\PenYourPrayerServer_custom\Database1\obj\Debug\Database1.pdb

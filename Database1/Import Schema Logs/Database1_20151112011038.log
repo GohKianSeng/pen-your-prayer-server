@@ -1,0 +1,71 @@
+12/11/2015 9:10:38 AM	This log contains information about the import schema operation into project 'Database1' on computer 'IN40000714-0' by user 'sisgks'.
+12/11/2015 9:10:38 AM	Import of database schema has started.
+12/11/2015 9:10:45 AM	Gathering database options
+12/11/2015 9:10:45 AM	Gathering users
+12/11/2015 9:10:45 AM	Gathering roles
+12/11/2015 9:10:45 AM	Gathering application roles
+12/11/2015 9:10:45 AM	Gathering role memberships
+12/11/2015 9:10:45 AM	Gathering filegroups
+12/11/2015 9:10:45 AM	Gathering full-text catalogs
+12/11/2015 9:10:45 AM	Gathering assemblies
+12/11/2015 9:10:45 AM	Gathering certificates
+12/11/2015 9:10:45 AM	Gathering asymmetric keys
+12/11/2015 9:10:45 AM	Gathering symmetric keys
+12/11/2015 9:10:45 AM	Gathering encrypted symmetric keys
+12/11/2015 9:10:45 AM	Gathering schemas
+12/11/2015 9:10:45 AM	Gathering XML schema collections
+12/11/2015 9:10:45 AM	Gathering user-defined data types
+12/11/2015 9:10:45 AM	Gathering user-defined types
+12/11/2015 9:10:45 AM	Gathering table types
+12/11/2015 9:10:45 AM	Gathering unique keys for table types
+12/11/2015 9:10:45 AM	Gathering primary keys for table types
+12/11/2015 9:10:45 AM	Gathering check constraints for table types
+12/11/2015 9:10:45 AM	Gathering default constraints for table types
+12/11/2015 9:10:45 AM	Gathering partition functions
+12/11/2015 9:10:45 AM	Gathering partition schemes
+12/11/2015 9:10:45 AM	Gathering functions
+12/11/2015 9:10:45 AM	Gathering encrypted functions
+12/11/2015 9:10:45 AM	Gathering aggregates
+12/11/2015 9:10:45 AM	Gathering procedures
+12/11/2015 9:10:45 AM	Gathering encrypted procedures
+12/11/2015 9:10:45 AM	Gathering tables
+12/11/2015 9:10:45 AM	Gathering primary keys
+12/11/2015 9:10:45 AM	Gathering unique constraints
+12/11/2015 9:10:45 AM	Gathering foreign keys
+12/11/2015 9:10:45 AM	Gathering default constraints
+12/11/2015 9:10:45 AM	Gathering check constraints
+12/11/2015 9:10:45 AM	Gathering views
+12/11/2015 9:10:45 AM	Gathering encrypted views
+12/11/2015 9:10:45 AM	Gathering indexes
+12/11/2015 9:10:45 AM	Gathering statistics
+12/11/2015 9:10:45 AM	Gathering full-text index stoplists
+12/11/2015 9:10:45 AM	Gathering full-text indexes
+12/11/2015 9:10:45 AM	Gathering spatial indexes
+12/11/2015 9:10:45 AM	Gathering XML indexes
+12/11/2015 9:10:45 AM	Gathering encrypted triggers
+12/11/2015 9:10:45 AM	Gathering triggers
+12/11/2015 9:10:45 AM	Gathering encrypted and clr ddl triggers
+12/11/2015 9:10:45 AM	Gathering ddl triggers
+12/11/2015 9:10:45 AM	Gathering synonyms
+12/11/2015 9:10:45 AM	Gathering defaults
+12/11/2015 9:10:45 AM	Gathering data constraint uddt bindings
+12/11/2015 9:10:45 AM	Gathering rules
+12/11/2015 9:10:45 AM	Gathering data constraint uddt bindings
+12/11/2015 9:10:45 AM	Gathering message types
+12/11/2015 9:10:45 AM	Gathering queues
+12/11/2015 9:10:45 AM	Gathering contracts
+12/11/2015 9:10:45 AM	Gathering services
+12/11/2015 9:10:45 AM	Gathering event notifications
+12/11/2015 9:10:45 AM	Gathering remote service bindings
+12/11/2015 9:10:45 AM	Gathering broker priorities
+12/11/2015 9:10:45 AM	Gathering signatures
+12/11/2015 9:10:45 AM	Gathering data compression options
+12/11/2015 9:10:45 AM	Gathering extended properties
+12/11/2015 9:10:45 AM	Gathering credentials
+12/11/2015 9:10:45 AM	Gathering logins
+12/11/2015 9:10:45 AM	Gathering server audits
+12/11/2015 9:10:45 AM	Scanning project for duplicate elements
+12/11/2015 9:10:45 AM	Finished duplicate element processing
+12/11/2015 9:10:46 AM	Finished importing database.
+12/11/2015 9:10:46 AM	A summary of the import was saved to the following location: D:\PenYourPrayerServer_custom\Database1\Import Schema Logs\Database1_20151112011038.log
+12/11/2015 9:10:46 AM	Click Finish to continue...

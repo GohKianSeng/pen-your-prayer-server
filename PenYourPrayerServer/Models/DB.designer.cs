@@ -62,11 +62,48 @@ namespace PenYourPrayerServer.Models
 			OnCreated();
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNewUser")]
+		public int usp_AddNewUser([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoginType", DbType="VarChar(15)")] string loginType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserName", DbType="VarChar(50)")] string userName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="NVarChar(200)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ProfilePictureURL", DbType="VarChar(200)")] string profilePictureURL, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Password", DbType="VarChar(50)")] string password, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MobilePlatform", DbType="VarChar(10)")] string mobilePlatform, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PushNotificationID", DbType="VarChar(200)")] string pushNotificationID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="HMACHashKey", DbType="VarChar(128)")] string hMACHashKey, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Country", DbType="VarChar(50)")] string country, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Region", DbType="VarChar(100)")] string region, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="City", DbType="VarChar(100)")] string city, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(200)")] ref string result, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="BigInt")] ref System.Nullable<long> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="VerificationCode", DbType="VarChar(100)")] ref string verificationCode)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), loginType, userName, name, profilePictureURL, password, mobilePlatform, pushNotificationID, hMACHashKey, country, region, city, result, iD, verificationCode);
+			result = ((string)(result1.GetParameterValue(11)));
+			iD = ((System.Nullable<long>)(result1.GetParameterValue(12)));
+			verificationCode = ((string)(result1.GetParameterValue(13)));
+			return ((int)(result1.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNonce")]
 		public int usp_AddNonce([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoginType", DbType="VarChar(15)")] string loginType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Username", DbType="VarChar(50)")] string username, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestDate", DbType="DateTime")] System.Nullable<System.DateTime> requestDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nonce", DbType="Int")] System.Nullable<int> nonce, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(200)")] ref string result)
 		{
 			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), loginType, username, requestDate, nonce, result);
 			result = ((string)(result1.GetParameterValue(4)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetUserActivationCode")]
+		public ISingleResult<usp_GetUserActivationCodeResult> usp_GetUserActivationCode([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoginType", DbType="VarChar(15)")] string loginType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserName", DbType="VarChar(50)")] string userName)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), loginType, userName);
+			return ((ISingleResult<usp_GetUserActivationCodeResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_ActivateUserAccount")]
+		public int usp_ActivateUserAccount([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="BigInt")] System.Nullable<long> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ActivationCode", DbType="VarChar(100)")] string activationCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(200)")] ref string result, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DisplayName", DbType="NVarChar(200)")] ref string displayName)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, activationCode, result, displayName);
+			result = ((string)(result1.GetParameterValue(2)));
+			displayName = ((string)(result1.GetParameterValue(3)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_ResetPassword")]
+		public int usp_ResetPassword([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoginType", DbType="VarChar(15)")] string loginType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Username", DbType="VarChar(50)")] string username, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(200)")] ref string result, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="BigInt")] ref System.Nullable<long> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="VerificationCode", DbType="VarChar(100)")] ref string verificationCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DisplayName", DbType="VarChar(200)")] ref string displayName)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), loginType, username, result, iD, verificationCode, displayName);
+			result = ((string)(result1.GetParameterValue(2)));
+			iD = ((System.Nullable<long>)(result1.GetParameterValue(3)));
+			verificationCode = ((string)(result1.GetParameterValue(4)));
+			displayName = ((string)(result1.GetParameterValue(5)));
 			return ((int)(result1.ReturnValue));
 		}
 		
@@ -77,20 +114,157 @@ namespace PenYourPrayerServer.Models
 			return ((ISingleResult<usp_GetUserInformationResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNewUser")]
-		public int usp_AddNewUser([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LoginType", DbType="VarChar(15)")] string loginType, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserName", DbType="VarChar(50)")] string userName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="NVarChar(200)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ProfilePictureURL", DbType="VarChar(200)")] string profilePictureURL, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Password", DbType="VarChar(50)")] string password, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MobilePlatform", DbType="VarChar(10)")] string mobilePlatform, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PushNotificationID", DbType="VarChar(200)")] string pushNotificationID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="HMACHashKey", DbType="VarChar(128)")] string hMACHashKey, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Country", DbType="VarChar(50)")] string country, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Region", DbType="VarChar(100)")] string region, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="City", DbType="VarChar(100)")] string city, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(200)")] ref string result, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="BigInt")] ref System.Nullable<long> iD)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddLog")]
+		public int usp_AddLog([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LogText", DbType="VarChar(MAX)")] string logText)
 		{
-			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), loginType, userName, name, profilePictureURL, password, mobilePlatform, pushNotificationID, hMACHashKey, country, region, city, result, iD);
-			result = ((string)(result1.GetParameterValue(11)));
-			iD = ((System.Nullable<long>)(result1.GetParameterValue(12)));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), logText);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNewPrayerAttachment")]
+		public int usp_AddNewPrayerAttachment([global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Filename", DbType="VarChar(128)")] string filename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="OriginalFilePath", DbType="VarChar(MAX)")] string originalFilePath, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AttachmentID", DbType="BigInt")] ref System.Nullable<long> attachmentID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), prayerID, filename, originalFilePath, userID, attachmentID);
+			attachmentID = ((System.Nullable<long>)(result.GetParameterValue(4)));
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddQueueAction")]
+		public int usp_AddQueueAction([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="VarChar(128)")] string gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(10)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, gUID, result);
+			result = ((string)(result1.GetParameterValue(2)));
 			return ((int)(result1.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_addLog")]
-		public int usp_addLog([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string value)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNewPrayer")]
+		public int usp_AddNewPrayer([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Prayer", DbType="NVarChar(MAX)")] string prayer, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedWhen", DbType="DateTime")] System.Nullable<System.DateTime> createdWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TouchedWhen", DbType="DateTime")] System.Nullable<System.DateTime> touchedWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PublicView", DbType="Bit")] System.Nullable<bool> publicView, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Friends", DbType="Xml")] System.Xml.Linq.XElement friends, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] ref System.Nullable<long> prayerID)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), value);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, prayer, createdWhen, touchedWhen, publicView, friends, queueActionGUID, prayerID);
+			prayerID = ((System.Nullable<long>)(result.GetParameterValue(7)));
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetCreatedPrayerFromQueueActionGUID")]
+		public int usp_GetCreatedPrayerFromQueueActionGUID([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] ref System.Nullable<long> prayerID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, queueActionGUID, prayerID);
+			prayerID = ((System.Nullable<long>)(result.GetParameterValue(2)));
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdatePrayerPublicView")]
+		public int usp_UpdatePrayerPublicView([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PublicView", DbType="Bit")] System.Nullable<bool> publicView, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerID, publicView, result);
+			result = ((string)(result1.GetParameterValue(4)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdatePrayerTagFriends")]
+		public int usp_UpdatePrayerTagFriends([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Friends", DbType="Xml")] System.Xml.Linq.XElement friends, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerID, friends, result);
+			result = ((string)(result1.GetParameterValue(4)));
+			return ((int)(result1.ReturnValue));
+		}
+	}
+	
+	public partial class usp_GetUserActivationCodeResult
+	{
+		
+		private string _LoginType;
+		
+		private string _UserName;
+		
+		private string _DisplayName;
+		
+		private long _ID;
+		
+		private string _ActivationCode;
+		
+		public usp_GetUserActivationCodeResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoginType", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
+		public string LoginType
+		{
+			get
+			{
+				return this._LoginType;
+			}
+			set
+			{
+				if ((this._LoginType != value))
+				{
+					this._LoginType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this._UserName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DisplayName", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string DisplayName
+		{
+			get
+			{
+				return this._DisplayName;
+			}
+			set
+			{
+				if ((this._DisplayName != value))
+				{
+					this._DisplayName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL")]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActivationCode", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string ActivationCode
+		{
+			get
+			{
+				return this._ActivationCode;
+			}
+			set
+			{
+				if ((this._ActivationCode != value))
+				{
+					this._ActivationCode = value;
+				}
+			}
 		}
 	}
 	
@@ -124,6 +298,8 @@ namespace PenYourPrayerServer.Models
 		private string _Region;
 		
 		private string _City;
+		
+		private bool _EmailVerification;
 		
 		public usp_GetUserInformationResult()
 		{
@@ -349,6 +525,22 @@ namespace PenYourPrayerServer.Models
 				if ((this._City != value))
 				{
 					this._City = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailVerification", DbType="Bit NOT NULL")]
+		public bool EmailVerification
+		{
+			get
+			{
+				return this._EmailVerification;
+			}
+			set
+			{
+				if ((this._EmailVerification != value))
+				{
+					this._EmailVerification = value;
 				}
 			}
 		}

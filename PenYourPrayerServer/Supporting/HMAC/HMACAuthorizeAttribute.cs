@@ -78,11 +78,20 @@ namespace PenYourPrayerServer.Supporting.HMAC
                     string query = "";
                     if (actionContext.Request.RequestUri.Query.Length > 0)
                         query = HttpUtility.UrlDecode(HttpUtility.UrlDecode(actionContext.Request.RequestUri.Query.Substring(1)));
-                    string content = content = actionContext.Request.Content.ReadAsStringAsync().Result;
-                    if (content.StartsWith("\""))
-                        content = content.Substring(1);
-                    if(content.EndsWith("\""))
-                        content = content.Substring(0, content.Length-1);
+                    //string content = content = actionContext.Request.Content.ReadAsStringAsync().Result;
+
+                    byte[] contentBytes = actionContext.Request.Content.ReadAsByteArrayAsync().Result;
+                    string contentMD5 = "";
+                    if (method != "GET")
+                        contentMD5 = md5CheckSum(contentBytes).ToUpper();
+                    //DBDataContext dda = new DBDataContext();
+                    //dda.usp_AddLog(DateTime.Now.ToString() + " content md5: " + contentMD5);
+                    //dda.Connection.Close();
+                    
+                    //if (content.StartsWith("\""))
+                    //    content = content.Substring(1);
+                    //if(content.EndsWith("\""))
+                    //    content = content.Substring(0, content.Length-1);
                    
                     if (method == null || nonce == null || receivedHash == null || LoginType == null || UserName == null || tdate == null || LoginType.Length == 0 || UserName.Length == 0 || tdate.Length == 0 || receivedHash.Length == 0 || nonce.Length == 0 || method.Length == 0)
                     {
@@ -154,10 +163,11 @@ namespace PenYourPrayerServer.Supporting.HMAC
                         }
 
                         identity = new PenYourPrayerIdentity(0, "", "");
-                        HMACHashKey = "sSLPIZ4XmZRNEwDAQxY0yuC+MeSQVzxXJNbZTgAlRF/zAocJlTU4WPOjAXmQwbZ+XhkoYGS8exqzUKhxqCfY4SXOJTB+GG5R";
+                        HMACHashKey = QuickReference.AnonymousHMACKey;
                     }
                     byte[] key = Encoding.ASCII.GetBytes(HMACHashKey);
-                    string contentToHash = method + LoginType + UserName + tdate + nonce + md5CheckSum(query).ToUpper() + md5CheckSum(content).ToUpper();                    
+                    string contentToHash = method + LoginType + UserName + tdate + nonce + md5CheckSum(query).ToUpper() + contentMD5;
+                                        
                     if (Encode(contentToHash, key) != receivedHash)
                     {
                         return false;
@@ -184,6 +194,18 @@ namespace PenYourPrayerServer.Supporting.HMAC
             {
                 hash = BitConverter.ToString(
                   md5.ComputeHash(Encoding.UTF8.GetBytes(theString))
+                ).Replace("-", String.Empty);
+            }
+            return hash;
+        }
+
+        private string md5CheckSum(byte[] content)
+        {
+            string hash = "";
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                hash = BitConverter.ToString(
+                  md5.ComputeHash(content)
                 ).Replace("-", String.Empty);
             }
             return hash;
