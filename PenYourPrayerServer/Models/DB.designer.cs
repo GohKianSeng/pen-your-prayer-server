@@ -168,6 +168,31 @@ namespace PenYourPrayerServer.Models
 			result = ((string)(result1.GetParameterValue(4)));
 			return ((int)(result1.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNewPrayerComment")]
+		public int usp_AddNewPrayerComment([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Comment", DbType="NVarChar(MAX)")] string comment, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedWhen", DbType="DateTime")] System.Nullable<System.DateTime> createdWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TouchedWhen", DbType="DateTime")] System.Nullable<System.DateTime> touchedWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CommentID", DbType="BigInt")] ref System.Nullable<long> commentID)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerID, comment, createdWhen, touchedWhen, result, commentID);
+			result = ((string)(result1.GetParameterValue(6)));
+			commentID = ((System.Nullable<long>)(result1.GetParameterValue(7)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeletePrayerComment")]
+		public int usp_DeletePrayerComment([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CommentID", DbType="BigInt")] System.Nullable<long> commentID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, commentID, result);
+			result = ((string)(result1.GetParameterValue(3)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdatePrayerComment")]
+		public int usp_UpdatePrayerComment([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CommentID", DbType="BigInt")] System.Nullable<long> commentID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Comment", DbType="NVarChar(MAX)")] string comment, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TouchedWhen", DbType="DateTime")] System.Nullable<System.DateTime> touchedWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, commentID, comment, touchedWhen, result);
+			result = ((string)(result1.GetParameterValue(5)));
+			return ((int)(result1.ReturnValue));
+		}
 	}
 	
 	public partial class usp_GetUserActivationCodeResult

@@ -176,6 +176,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Struct\PrayerComment.cs" />
     <Compile Include="Models\Struct\PrayerAttachment.cs" />
     <Compile Include="Models\Struct\Friends.cs" />
     <Compile Include="Models\Struct\Prayer.cs" />

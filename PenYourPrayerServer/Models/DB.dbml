@@ -124,4 +124,31 @@
     <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_AddNewPrayerComment" Method="usp_AddNewPrayerComment">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Comment" Parameter="comment" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="CreatedWhen" Parameter="createdWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="TouchedWhen" Parameter="touchedWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Parameter Name="CommentID" Parameter="commentID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeletePrayerComment" Method="usp_DeletePrayerComment">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="CommentID" Parameter="commentID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UpdatePrayerComment" Method="usp_UpdatePrayerComment">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="CommentID" Parameter="commentID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Comment" Parameter="comment" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="TouchedWhen" Parameter="touchedWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>

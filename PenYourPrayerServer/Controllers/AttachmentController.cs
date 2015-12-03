@@ -70,7 +70,7 @@ namespace PenYourPrayerServer.Controllers
                 return Request.CreateResponse(HttpStatusCode.Accepted, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.Accepted, Description = "NOTEXISTS" });
             }
             else
-                return Request.CreateResponse(HttpStatusCode.Accepted, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.Accepted, Description = "EXISTS" });
+                return Request.CreateResponse(HttpStatusCode.Accepted, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.Accepted, Description = "EXISTS-" + filename });
         }
     }
 }

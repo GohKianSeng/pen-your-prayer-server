@@ -106,5 +106,54 @@ namespace PenYourPrayerServer.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
+
+        [Route("AddNewPrayerComment")]
+        public HttpResponseMessage AddNewPrayerComment(string QueueActionGUID, string PrayerID, PrayerComment p)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                String res = "";
+                long? CommentID = -1;
+                db.usp_AddNewPrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.OwnerPrayerID), p.Comment, p.CreatedWhen.ToUniversalTime(), p.TouchedWhen.ToUniversalTime(), ref res, ref CommentID);
+                if (res.ToUpper() == "OK")
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + CommentID.ToString() });
+                else
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+            }
+        }
+
+        [HttpGet]
+        [Route("DeletePrayerComment")]
+        public HttpResponseMessage DeletePrayerComment(string QueueActionGUID, string CommentID)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                try
+                {
+                    String res = "";
+                    db.usp_DeletePrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(CommentID), ref res);
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "NOTEXISTS" });
+                }
+            }
+        }
+
+        [Route("UpdatePrayerComment")]
+        public HttpResponseMessage UpdatePrayerComment(string QueueActionGUID, PrayerComment p)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                String res = "";               
+                db.usp_UpdatePrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.CommentID), p.Comment, p.TouchedWhen.ToUniversalTime(), ref res);
+                return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+            }
+        }
     }
 }
