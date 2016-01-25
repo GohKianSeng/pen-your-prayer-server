@@ -193,6 +193,68 @@ namespace PenYourPrayerServer.Models
 			result = ((string)(result1.GetParameterValue(5)));
 			return ((int)(result1.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNewPrayerAmen")]
+		public int usp_AddNewPrayerAmen([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AmenID", DbType="BigInt")] ref System.Nullable<long> amenID)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerID, result, amenID);
+			result = ((string)(result1.GetParameterValue(3)));
+			amenID = ((System.Nullable<long>)(result1.GetParameterValue(4)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeletePrayerAmen")]
+		public int usp_DeletePrayerAmen([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeletePrayer")]
+		public int usp_DeletePrayer([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_AddNewPrayerAnswered")]
+		public int usp_AddNewPrayerAnswered([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Answered", DbType="NVarChar(MAX)")] string answered, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedWhen", DbType="DateTime")] System.Nullable<System.DateTime> createdWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TouchedWhen", DbType="DateTime")] System.Nullable<System.DateTime> touchedWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AnsweredID", DbType="BigInt")] ref System.Nullable<long> answeredID)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerID, answered, createdWhen, touchedWhen, result, answeredID);
+			result = ((string)(result1.GetParameterValue(6)));
+			answeredID = ((System.Nullable<long>)(result1.GetParameterValue(7)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_aaaaa_mustdeleteTemporaryTesting")]
+		public ISingleResult<usp_aaaaa_mustdeleteTemporaryTestingResult> usp_aaaaa_mustdeleteTemporaryTesting()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<usp_aaaaa_mustdeleteTemporaryTestingResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetLatestPrayers")]
+		public ISingleResult<usp_GetLatestPrayersResult> usp_GetLatestPrayers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, prayerID);
+			return ((ISingleResult<usp_GetLatestPrayersResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetLatestFriends")]
+		public ISingleResult<usp_GetLatestFriendsResult> usp_GetLatestFriends([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(MAX)")] string friends)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, friends);
+			return ((ISingleResult<usp_GetLatestFriendsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetPrayerAttachmentInformation")]
+		public int usp_GetPrayerAttachmentInformation([global::System.Data.Linq.Mapping.ParameterAttribute(Name="AttachmentID", DbType="BigInt")] System.Nullable<long> attachmentID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Filename", DbType="VarChar(128)")] ref string filename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="OwnerID", DbType="BigInt")] ref System.Nullable<long> ownerID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), attachmentID, userID, filename, ownerID);
+			filename = ((string)(result.GetParameterValue(2)));
+			ownerID = ((System.Nullable<long>)(result.GetParameterValue(3)));
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	public partial class usp_GetUserActivationCodeResult
@@ -566,6 +628,336 @@ namespace PenYourPrayerServer.Models
 				if ((this._EmailVerification != value))
 				{
 					this._EmailVerification = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_aaaaa_mustdeleteTemporaryTestingResult
+	{
+		
+		private System.DateTime _Column1;
+		
+		public usp_aaaaa_mustdeleteTemporaryTestingResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="", Storage="_Column1", DbType="DateTime NOT NULL")]
+		public System.DateTime Column1
+		{
+			get
+			{
+				return this._Column1;
+			}
+			set
+			{
+				if ((this._Column1 != value))
+				{
+					this._Column1 = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetLatestPrayersResult
+	{
+		
+		private System.DateTime _TouchedWhen;
+		
+		private System.DateTime _CreatedWhen;
+		
+		private long _UserID;
+		
+		private long _PrayerID;
+		
+		private string _PrayerContent;
+		
+		private bool _PublicView;
+		
+		private bool _Deleted;
+		
+		private string _QueueActionGUID;
+		
+		private System.Xml.Linq.XElement _TagFriends;
+		
+		private System.Xml.Linq.XElement _Attachments;
+		
+		private System.Xml.Linq.XElement _Comment;
+		
+		private System.Xml.Linq.XElement _Answers;
+		
+		private System.Xml.Linq.XElement _Amen;
+		
+		public usp_GetLatestPrayersResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TouchedWhen", DbType="DateTime NOT NULL")]
+		public System.DateTime TouchedWhen
+		{
+			get
+			{
+				return this._TouchedWhen;
+			}
+			set
+			{
+				if ((this._TouchedWhen != value))
+				{
+					this._TouchedWhen = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedWhen", DbType="DateTime NOT NULL")]
+		public System.DateTime CreatedWhen
+		{
+			get
+			{
+				return this._CreatedWhen;
+			}
+			set
+			{
+				if ((this._CreatedWhen != value))
+				{
+					this._CreatedWhen = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="BigInt NOT NULL")]
+		public long UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					this._UserID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerID", DbType="BigInt NOT NULL")]
+		public long PrayerID
+		{
+			get
+			{
+				return this._PrayerID;
+			}
+			set
+			{
+				if ((this._PrayerID != value))
+				{
+					this._PrayerID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerContent", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PrayerContent
+		{
+			get
+			{
+				return this._PrayerContent;
+			}
+			set
+			{
+				if ((this._PrayerContent != value))
+				{
+					this._PrayerContent = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublicView", DbType="Bit NOT NULL")]
+		public bool PublicView
+		{
+			get
+			{
+				return this._PublicView;
+			}
+			set
+			{
+				if ((this._PublicView != value))
+				{
+					this._PublicView = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deleted", DbType="Bit NOT NULL")]
+		public bool Deleted
+		{
+			get
+			{
+				return this._Deleted;
+			}
+			set
+			{
+				if ((this._Deleted != value))
+				{
+					this._Deleted = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueueActionGUID", DbType="VarChar(128)")]
+		public string QueueActionGUID
+		{
+			get
+			{
+				return this._QueueActionGUID;
+			}
+			set
+			{
+				if ((this._QueueActionGUID != value))
+				{
+					this._QueueActionGUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
+		public System.Xml.Linq.XElement TagFriends
+		{
+			get
+			{
+				return this._TagFriends;
+			}
+			set
+			{
+				if ((this._TagFriends != value))
+				{
+					this._TagFriends = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Attachments", DbType="Xml")]
+		public System.Xml.Linq.XElement Attachments
+		{
+			get
+			{
+				return this._Attachments;
+			}
+			set
+			{
+				if ((this._Attachments != value))
+				{
+					this._Attachments = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Xml")]
+		public System.Xml.Linq.XElement Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this._Comment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answers", DbType="Xml")]
+		public System.Xml.Linq.XElement Answers
+		{
+			get
+			{
+				return this._Answers;
+			}
+			set
+			{
+				if ((this._Answers != value))
+				{
+					this._Answers = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amen", DbType="Xml")]
+		public System.Xml.Linq.XElement Amen
+		{
+			get
+			{
+				return this._Amen;
+			}
+			set
+			{
+				if ((this._Amen != value))
+				{
+					this._Amen = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetLatestFriendsResult
+	{
+		
+		private string _DisplayName;
+		
+		private string _ProfilePictureURL;
+		
+		private long _ID;
+		
+		public usp_GetLatestFriendsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DisplayName", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string DisplayName
+		{
+			get
+			{
+				return this._DisplayName;
+			}
+			set
+			{
+				if ((this._DisplayName != value))
+				{
+					this._DisplayName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProfilePictureURL", DbType="VarChar(200)")]
+		public string ProfilePictureURL
+		{
+			get
+			{
+				return this._ProfilePictureURL;
+			}
+			set
+			{
+				if ((this._ProfilePictureURL != value))
+				{
+					this._ProfilePictureURL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="BigInt NOT NULL")]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
 				}
 			}
 		}

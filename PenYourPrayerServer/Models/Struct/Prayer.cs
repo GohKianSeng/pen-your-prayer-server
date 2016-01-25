@@ -26,6 +26,12 @@ namespace PenYourPrayerServer.Models.Struct
 
         public List<PrayerAttachment> attachments { get; set; }
 
+        public List<PrayerComment> comments { get; set; }
+
+        public List<PrayerAnswered> answers { get; set; }
+
+        public List<PrayerAmen> amen { get; set; }
+
         public String IfExecutedGUID { get; set; }
     }
 
@@ -33,7 +39,7 @@ namespace PenYourPrayerServer.Models.Struct
     {
         public CustomDateTimeConverter()
         {
-            base.DateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss'GMT'zzzz";
+            base.DateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss'GMT'zzzz";           
         }
     }
 }

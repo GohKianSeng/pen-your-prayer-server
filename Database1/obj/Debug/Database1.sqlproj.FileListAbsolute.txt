@@ -7,3 +7,12 @@ D:\PenYourPrayerServer_custom\Database1\obj\Debug\postdeploy.sql
 D:\PenYourPrayerServer_custom\Database1\obj\Debug\predeploy.sql
 D:\PenYourPrayerServer_custom\Database1\obj\Debug\Database1.dll
 D:\PenYourPrayerServer_custom\Database1\obj\Debug\Database1.pdb
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\bin\Debug\Database1.dacpac
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\bin\Debug\Database1.dll
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\bin\Debug\Database1.pdb
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\obj\Debug\Model.xml
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\obj\Debug\refactor.xml
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\obj\Debug\postdeploy.sql
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\obj\Debug\predeploy.sql
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\obj\Debug\Database1.dll
+C:\Users\sisgks\Desktop\mini Project\pen-your-prayer-server\Database1\obj\Debug\Database1.pdb

@@ -151,4 +151,75 @@
     <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_AddNewPrayerAmen" Method="usp_AddNewPrayerAmen">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Parameter Name="AmenID" Parameter="amenID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeletePrayerAmen" Method="usp_DeletePrayerAmen">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeletePrayer" Method="usp_DeletePrayer">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AddNewPrayerAnswered" Method="usp_AddNewPrayerAnswered">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Answered" Parameter="answered" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="CreatedWhen" Parameter="createdWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="TouchedWhen" Parameter="touchedWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Parameter Name="AnsweredID" Parameter="answeredID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_aaaaa_mustdeleteTemporaryTesting" Method="usp_aaaaa_mustdeleteTemporaryTesting">
+    <ElementType Name="usp_aaaaa_mustdeleteTemporaryTestingResult">
+      <Column Name="" Member="Column1" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetLatestPrayers" Method="usp_GetLatestPrayers">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_GetLatestPrayersResult">
+      <Column Name="TouchedWhen" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedWhen" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PrayerID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Deleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Answers" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Amen" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetLatestFriends" Method="usp_GetLatestFriends">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="friends" Type="System.String" DbType="VarChar(MAX)" />
+    <ElementType Name="usp_GetLatestFriendsResult">
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ProfilePictureURL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetPrayerAttachmentInformation" Method="usp_GetPrayerAttachmentInformation">
+    <Parameter Name="AttachmentID" Parameter="attachmentID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Filename" Parameter="filename" Type="System.String" DbType="VarChar(128)" Direction="InOut" />
+    <Parameter Name="OwnerID" Parameter="ownerID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>

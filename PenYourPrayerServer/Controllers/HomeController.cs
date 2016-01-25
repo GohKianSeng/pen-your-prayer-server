@@ -1,4 +1,5 @@
-﻿using PenYourPrayerServer.Supporting;
+﻿using PenYourPrayerServer.Models;
+using PenYourPrayerServer.Supporting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,13 @@ namespace PenYourPrayerServer.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            //CommonMethod.sendAccountActiviationEmail("mail@pyptesting.com", "sdfdfdsfsdf", "test", "123123");
+            string date = "empty";
+            using (DBDataContext db = new DBDataContext())
+            {
+                date = "UTC: " + db.usp_aaaaa_mustdeleteTemporaryTesting().ToList().ElementAt(0).Column1.ToString();
+            }
+
+            ViewData["utc"] = date;
             return View();
         }
     }

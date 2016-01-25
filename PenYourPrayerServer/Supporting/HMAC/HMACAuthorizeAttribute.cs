@@ -33,8 +33,30 @@ namespace PenYourPrayerServer.Supporting.HMAC
                                      
                 hashing order method + LoginType + UserName + tdate + nonce + query + content;                                       
              */
-            
-            if (actionContext.Request.Headers.Authorization != null)
+            if (System.Configuration.ConfigurationManager.AppSettings["DebugMode"] != null && System.Configuration.ConfigurationManager.AppSettings["DebugMode"].ToUpper() == "TRUE")
+            {
+                using (DBDataContext db = new DBDataContext())
+                {
+                    List<usp_GetUserInformationResult> d = db.usp_GetUserInformation("Email", "mail@pyptesting.com").ToList();
+                    PenYourPrayerIdentity identity = new PenYourPrayerIdentity(d.ElementAt(0).ID, d.ElementAt(0).LoginType, d.ElementAt(0).UserName)
+                    {
+
+                        DisplayName = d.ElementAt(0).DisplayName,
+                        ProfilePictureURL = d.ElementAt(0).ProfilePictureURL,
+                        MobilePlatform = d.ElementAt(0).MobilePlatform,
+                        PushNotificationID = d.ElementAt(0).PushNotificationID,
+                        City = d.ElementAt(0).City,
+                        Region = d.ElementAt(0).Region,
+                        Country = d.ElementAt(0).Country
+                    };
+
+                    IPrincipal principal = new GenericPrincipal(identity, null);
+                    actionContext.RequestContext.Principal = principal;
+                    return true;
+                }
+                return false;
+            }
+            else if (actionContext.Request.Headers.Authorization != null)
             {
                 try
                 {

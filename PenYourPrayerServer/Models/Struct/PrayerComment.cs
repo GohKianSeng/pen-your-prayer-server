@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Converters;
 using PenYourPrayerServer.Supporting.HMAC;
 using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 
 namespace PenYourPrayerServer.Models.Struct
@@ -23,4 +25,10 @@ namespace PenYourPrayerServer.Models.Struct
         public DateTime TouchedWhen;
     }
 
+    [XmlRootAttribute("AllComments")]
+    public class AllPrayerComments
+    {
+        [XmlElement("Comment")]
+        public List<PrayerComment> comments { get; set; }
+    }
 }

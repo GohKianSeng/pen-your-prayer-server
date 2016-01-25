@@ -1,11 +1,14 @@
-﻿using PenYourPrayerServer.Models.Struct;
+﻿using PenYourPrayerServer.Models;
+using PenYourPrayerServer.Models.Struct;
 using PenYourPrayerServer.Supporting;
 using PenYourPrayerServer.Supporting.HMAC;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 
@@ -71,6 +74,39 @@ namespace PenYourPrayerServer.Controllers
             }
             else
                 return Request.CreateResponse(HttpStatusCode.Accepted, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.Accepted, Description = "EXISTS-" + filename });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]        
+        [Route("DownloadPrayerAttachment")]
+        public HttpResponseMessage DownloadPrayerAttachment(long AttachmentID, long UserID)
+        {
+            string filename = "";
+            long? OwnerID = -1;
+            using (DBDataContext db = new DBDataContext())
+            {
+                db.usp_GetPrayerAttachmentInformation(AttachmentID, UserID, ref filename, ref OwnerID);
+                if (filename.Length > 0 && OwnerID != -1)
+                {
+                    var path = QuickReference.PrayerAttachmentImage + @"\" + OwnerID.ToString() + @"\" + filename;                    
+                    HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+                    var stream = new FileStream(path, FileMode.Open);
+                    result.Content = new StreamContent(stream);
+                    result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                    result.Content.Headers.ContentDisposition.FileName = filename;
+                    result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    result.Headers.CacheControl = new CacheControlHeaderValue();
+                    result.Headers.CacheControl.MaxAge = new TimeSpan(87600, 0, 0);  // 10 min. or 600 sec.
+                    
+                    return result;                    
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.Forbidden, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.Forbidden, Description = "" });
+                }
+            }
+
+            
         }
     }
 }
