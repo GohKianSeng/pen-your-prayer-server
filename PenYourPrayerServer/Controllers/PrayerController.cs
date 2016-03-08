@@ -290,5 +290,81 @@ namespace PenYourPrayerServer.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
+
+        [Route("AddNewPrayerRequest")]
+        public HttpResponseMessage AddNewPrayerRequest(string QueueActionGUID, PrayerRequest p)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                String res = "";
+                long? PrayerRequestID = -1;
+                db.usp_AddNewPrayerRequest(QueueActionGUID, (long?)user.Id, p.Subject, p.Description, p.CreatedWhen.ToUniversalTime(), p.TouchedWhen.ToUniversalTime(), ref res, ref PrayerRequestID);
+                if (res.ToUpper() != "OK")                    
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+
+
+                if (p.attachments != null)
+                {
+                    foreach (PrayerRequestAttachment att in p.attachments)
+                    {
+                        long? attachmentID = -1;
+                        string extension = att.FileName.Substring(att.FileName.LastIndexOf('.'));
+                        string fileFrom = QuickReference.PrayerAttachmentImageTemp + @"\" + user.Id.ToString() + @"\" + att.GUID + extension;
+                        string fileTo = QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString() + @"\" + att.GUID + extension;
+                        if (!System.IO.Directory.Exists(QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString()))
+                            System.IO.Directory.CreateDirectory(QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString());
+                        if (System.IO.File.Exists(fileFrom))
+                        {
+                            System.IO.File.Move(fileFrom, fileTo);
+                            db.usp_AddNewPrayerRequestAttachment(PrayerRequestID, att.GUID + extension, att.OriginalFilePath, (long?)user.Id, ref attachmentID);
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + PrayerRequestID.ToString() });
+            
+            }
+        }
+
+        [HttpPost]
+        [Route("GetLatestPrayerRequest")]
+        public HttpResponseMessage GetLatestPrayerRequest(string Useless, List<PrayerRequest> pr)
+        {
+            String id = "";
+            foreach (PrayerRequest prayerRequest in pr)
+            {
+                id += prayerRequest.PrayerRequestID + ";";
+            }
+
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            List<PrayerRequest> newPrayerRequest = new List<PrayerRequest>();
+            using (DBDataContext db = new DBDataContext())
+            {
+                List<usp_GetLatestPrayerRequestResult> res = db.usp_GetLatestPrayerRequest(user.Id, id).ToList();
+                foreach (usp_GetLatestPrayerRequestResult f in res)
+                {
+
+                    PrayerRequest temp = (PrayerRequest)f;
+
+                    if (f.Attachments != null)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(AllPrayerRequestAttachment));
+                        TextReader reader = new StringReader(f.Attachments.ToString());
+
+                        temp.attachments = ((AllPrayerRequestAttachment)serializer.Deserialize(reader)).attachments;
+                        reader.Close();
+                    }
+
+                    newPrayerRequest.Add(temp);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, newPrayerRequest);
+        }
     }
 }

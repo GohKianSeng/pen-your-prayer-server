@@ -20,6 +20,8 @@ namespace PenYourPrayerServer.Supporting.HMAC
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
+            int HMAC_Valid_inMinutes = 10;
+
             /**
                 Pen Your Prayer Authorization Specification
                 Encoding before send.
@@ -125,8 +127,8 @@ namespace PenYourPrayerServer.Supporting.HMAC
                         DateTime d = DateTime.UtcNow;
                         tDateTime = DateTime.ParseExact(tdate, "r", CultureInfo.InvariantCulture);
                         long timeDifference = (long)((d - tDateTime).TotalSeconds);
-                        
-                        if (timeDifference > (5 * 60) || timeDifference < (-5 * 60))
+
+                        if (timeDifference > (HMAC_Valid_inMinutes * 60) || timeDifference < (-HMAC_Valid_inMinutes * 60))
                             return false;
                     }
                                        
