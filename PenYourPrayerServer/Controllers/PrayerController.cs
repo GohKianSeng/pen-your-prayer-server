@@ -331,14 +331,49 @@ namespace PenYourPrayerServer.Controllers
             }
         }
 
+        [Route("UpdatePrayerRequest")]
+        public HttpResponseMessage UpdatePrayerRequest(string QueueActionGUID, PrayerRequest p)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                String res = "";
+                long PrayerRequestID = -1;
+                if (!long.TryParse(p.PrayerRequestID, out PrayerRequestID))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "NOTEXISTS-" + p.PrayerRequestID });
+                }
+                if(p.Answered)
+                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, p.AnsweredWhen.ToUniversalTime(), p.TouchedWhen.ToUniversalTime(), ref res);
+                else
+                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, null, p.TouchedWhen.ToUniversalTime(), ref res);
+                if (res.ToUpper() != "OK")
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+
+
+                if (p.attachments != null)
+                {
+                    
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + PrayerRequestID.ToString() });
+
+            }
+        }
+
         [HttpPost]
         [Route("GetLatestPrayerRequest")]
         public HttpResponseMessage GetLatestPrayerRequest(string Useless, List<PrayerRequest> pr)
         {
+            Int64 n;
+
+
             String id = "";
             foreach (PrayerRequest prayerRequest in pr)
             {
-                id += prayerRequest.PrayerRequestID + ";";
+                bool isNumeric = Int64.TryParse(prayerRequest.PrayerRequestID, out n);
+                if (isNumeric)
+                    id += prayerRequest.PrayerRequestID + ";";
             }
 
             PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
@@ -365,6 +400,27 @@ namespace PenYourPrayerServer.Controllers
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, newPrayerRequest);
+        }
+
+        [HttpGet]
+        [Route("DeletePrayerRequest")]
+        public HttpResponseMessage DeletePrayerRequest(string QueueActionGUID, string PrayerRequestID)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                try
+                {
+                    String res = "";
+                    db.usp_DeletePrayerRequest(QueueActionGUID, (long?)user.Id, long.Parse(PrayerRequestID), ref res);
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "NOTEXISTS" });
+                }
+            }
         }
     }
 }

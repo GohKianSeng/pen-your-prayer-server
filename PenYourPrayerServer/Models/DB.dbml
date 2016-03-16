@@ -256,4 +256,24 @@
       <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.usp_UpdatePrayerRequest" Method="usp_UpdatePrayerRequest">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerRequestID" Parameter="prayerRequestID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Subject" Parameter="subject" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="NVarChar(4000)" />
+    <Parameter Name="Answered" Parameter="answered" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="AnswerComment" Parameter="answerComment" Type="System.String" DbType="NVarChar(4000)" />
+    <Parameter Name="AnsweredWhen" Parameter="answeredWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="TouchedWhen" Parameter="touchedWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_DeletePrayerRequest" Method="usp_DeletePrayerRequest">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerRequestID" Parameter="prayerRequestID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>

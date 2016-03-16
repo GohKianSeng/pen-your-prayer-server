@@ -279,6 +279,22 @@ namespace PenYourPrayerServer.Models
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, pr);
 			return ((ISingleResult<usp_GetLatestPrayerRequestResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdatePrayerRequest")]
+		public int usp_UpdatePrayerRequest([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerRequestID", DbType="BigInt")] System.Nullable<long> prayerRequestID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Subject", DbType="NVarChar(50)")] string subject, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Description", DbType="NVarChar(4000)")] string description, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Answered", DbType="Bit")] System.Nullable<bool> answered, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AnswerComment", DbType="NVarChar(4000)")] string answerComment, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AnsweredWhen", DbType="DateTime")] System.Nullable<System.DateTime> answeredWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TouchedWhen", DbType="DateTime")] System.Nullable<System.DateTime> touchedWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerRequestID, subject, description, answered, answerComment, answeredWhen, touchedWhen, result);
+			result = ((string)(result1.GetParameterValue(9)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeletePrayerRequest")]
+		public int usp_DeletePrayerRequest([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerRequestID", DbType="BigInt")] System.Nullable<long> prayerRequestID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, prayerRequestID, result);
+			result = ((string)(result1.GetParameterValue(3)));
+			return ((int)(result1.ReturnValue));
+		}
 	}
 	
 	public partial class usp_GetUserActivationCodeResult
