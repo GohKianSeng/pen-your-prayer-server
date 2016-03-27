@@ -13,7 +13,7 @@ namespace PenYourPrayerServer.Supporting
 {
     public class SocialMediaAuthentication
     {
-        public static bool CheckFacebookAccessToken(string accessToken)
+        public static bool CheckFacebookAccessToken(string accessToken, ref object fbToken)
         {
             using (WebClient client = new WebClient())
             {
@@ -23,11 +23,12 @@ namespace PenYourPrayerServer.Supporting
                 JavaScriptSerializer serializer1 = new JavaScriptSerializer();
                 FacebookDebugToken token = serializer1.Deserialize<FacebookDebugToken>(data);
 
+                fbToken = token;
                 return token.data.is_valid;                
             }            
         }
 
-        public static bool CheckGooglePlusAccessToken(string accessToken)
+        public static bool CheckGooglePlusAccessToken(string accessToken, ref object gpToken)
         {
             //https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=
             using (WebClient client = new WebClient())
@@ -41,7 +42,10 @@ namespace PenYourPrayerServer.Supporting
                     GoogleTokenInfo token = serializer1.Deserialize<GoogleTokenInfo>(data);
 
                     if (token.aud != null)
+                    {
+                        gpToken = token;
                         return token.aud.ToUpper().StartsWith("1036182018589");
+                    }
                     else
                         return false;
                 }

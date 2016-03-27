@@ -111,44 +111,131 @@ namespace PenYourPrayerServer.Controllers
             }
         }
 
+        [Route("SocialLogin")]
+        public HttpResponseMessage SocialLogin(string LoginType, string UserName, string Secret, string AccessToken, string PushNotificationID, string MobilePlatform)
+        {
+            bool socialresult = false;
+            object token = null;
+            PenYourPrayerUser tuser = new PenYourPrayerUser();
+            if (LoginType.ToUpper() == "FACEBOOK")
+            {
+                socialresult = SocialMediaAuthentication.CheckFacebookAccessToken("CAAXXIYv53qcBABWf4lQvRT0Rm3UgBXcF1foQ4SRTNDp7eaSvDFLe4fZC4BFqsE1YYTcdUQw3UvZCRkmdWZAFbu2hav9UuHZAoE9VcpLkKvsSZC3IfLUrHglCygQ5XbZBcH0ORI9t2QzKAjggPsrORxmVgovoHZCzl4wV56mv9cQPxvZBxTCiOJlrcdbh5JigAxXnQ2h5Yc0WinZAjcypHhrgZAL8BnwiKOECTDNFXgOtfbDQZDZD", ref token);
+                if (socialresult)
+                {
+                    //user.
+                }
+            }
+            //else if (LoginType.ToUpper() == "TWITTER")
+            //{
+            //    result = SocialMediaAuthentication.checkTwitterAccessToken(UserName, "806837785-trTr0ObdqaW0owy1N0WXJFh6OGSlgUH74nh3qoHO", "w5j7WPwHWwY4DSfJ82tRVZF7SBogZJ6XABptVt431uOowvwFKC");
+            //}
+            else if (LoginType.ToUpper() == "GOOGLEPLUS")
+            {
+                socialresult = SocialMediaAuthentication.CheckGooglePlusAccessToken(AccessToken, ref token);
+                if (socialresult)
+                {
+                    GoogleTokenInfo gptoken = (GoogleTokenInfo)token;
+                    tuser.ProfilePictureURL = gptoken.picture;
+                    tuser.DisplayName = gptoken.name;
+                    tuser.UserName = gptoken.email;
+                    
+                }   
+            }
+            if (!socialresult)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = "Invalid Social Login" });
+            }
+            else
+            {
+
+                using (DBDataContext db = new DBDataContext())
+                {
+                    PenYourPrayerUser user;
+                    List<usp_GetUserInformationResult> res = db.usp_GetUserInformation(LoginType, UserName).ToList();
+                    if (res.Count() > 0)
+                    {
+                        usp_GetUserInformationResult t = res.ElementAt(0);
+                        db.usp_UpdateUserMobileDeviceInformation(t.ID, MobilePlatform, PushNotificationID);
+                        db.usp_UpdateUserSocialInformation(t.ID, tuser.DisplayName, tuser.UserName, tuser.ProfilePictureURL);
+
+                        user = new PenYourPrayerUser();
+                        user.Id = t.ID;
+                        user.DisplayName = tuser.DisplayName;
+                        user.LoginType = t.LoginType;
+                        user.UserName = t.UserName;
+                        user.MobilePlatform = MobilePlatform;
+                        user.ProfilePictureURL = tuser.ProfilePictureURL;
+                        user.PushNotificationID = PushNotificationID;
+                        user.HMACHashKey = t.HMACHashKey;
+                        user.EmailVerification = true;
+                    }
+                    else
+                    {
+                        //create new account
+                        string result = "";
+                        string verificationCode = "";
+                        long? id = -1;
+                        string HMACSecretKey = CustomPasswordHasher.HashPassword(Guid.NewGuid().ToString()) + CustomPasswordHasher.HashPassword(Guid.NewGuid().ToString());
+                        db.usp_AddNewUser(LoginType, UserName, tuser.DisplayName, tuser.ProfilePictureURL, "", MobilePlatform, PushNotificationID, HMACSecretKey, null, null, null, ref result, ref id, ref verificationCode);
+
+                        user = new PenYourPrayerUser();
+                        user.Id = (long)id;
+                        user.DisplayName = tuser.DisplayName;
+                        user.LoginType = LoginType;
+                        user.UserName = UserName;
+                        user.MobilePlatform = MobilePlatform;
+                        user.ProfilePictureURL = tuser.ProfilePictureURL;
+                        user.PushNotificationID = PushNotificationID;
+                        user.HMACHashKey = HMACSecretKey;
+                        user.EmailVerification = true;
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, user);
+
+                }
+            }
+        }
+
         [Route("Login")]
-        public HttpResponseMessage Login(string LoginType, string UserName, string Password_Secret, string AccessToken)
+        public HttpResponseMessage Login(string LoginType, string UserName, string Password, string PushNotificationID, string MobilePlatform)
         {
             using (DBDataContext db = new DBDataContext())
             {
                 List<usp_GetUserInformationResult> res = db.usp_GetUserInformation(LoginType, UserName).ToList();
-                if (res.Count() > 0 && LoginType.ToUpper() == "EMAIL" && CustomPasswordHasher.VerifyHashedPassword(res.ElementAt(0).Password, Password_Secret))
+                if (res.Count() > 0 && LoginType.ToUpper() == "EMAIL" && CustomPasswordHasher.VerifyHashedPassword(res.ElementAt(0).Password, Password))
                 {
-
                     usp_GetUserInformationResult t = res.ElementAt(0);
+                    db.usp_UpdateUserMobileDeviceInformation(t.ID, MobilePlatform, PushNotificationID);
+                    
                     PenYourPrayerUser user = new PenYourPrayerUser();
                     user.Id = t.ID;
                     user.DisplayName = t.DisplayName;
                     user.LoginType = t.LoginType;
                     user.UserName = t.UserName;
-                    user.MobilePlatform = t.MobilePlatform;
+                    user.MobilePlatform = MobilePlatform;
                     user.ProfilePictureURL = t.ProfilePictureURL;
-                    user.PushNotificationID = t.PushNotificationID;
+                    user.PushNotificationID = PushNotificationID;
                     user.HMACHashKey = t.HMACHashKey;
                     user.EmailVerification = t.EmailVerification;
                     if (!t.EmailVerification)
-                        user.HMACHashKey = "";
+                        user.HMACHashKey = "";                 
+                    //
+
                     return Request.CreateResponse(HttpStatusCode.OK, user);                        
                 }
-                else if (res.Count() > 0 && LoginType.ToUpper() == "FACEBOOK")
-                {
-                    bool result = SocialMediaAuthentication.CheckFacebookAccessToken("CAAXXIYv53qcBABWf4lQvRT0Rm3UgBXcF1foQ4SRTNDp7eaSvDFLe4fZC4BFqsE1YYTcdUQw3UvZCRkmdWZAFbu2hav9UuHZAoE9VcpLkKvsSZC3IfLUrHglCygQ5XbZBcH0ORI9t2QzKAjggPsrORxmVgovoHZCzl4wV56mv9cQPxvZBxTCiOJlrcdbh5JigAxXnQ2h5Yc0WinZAjcypHhrgZAL8BnwiKOECTDNFXgOtfbDQZDZD");
+                //else if (res.Count() > 0 && LoginType.ToUpper() == "FACEBOOK")
+                //{
+                //    bool result = SocialMediaAuthentication.CheckFacebookAccessToken("CAAXXIYv53qcBABWf4lQvRT0Rm3UgBXcF1foQ4SRTNDp7eaSvDFLe4fZC4BFqsE1YYTcdUQw3UvZCRkmdWZAFbu2hav9UuHZAoE9VcpLkKvsSZC3IfLUrHglCygQ5XbZBcH0ORI9t2QzKAjggPsrORxmVgovoHZCzl4wV56mv9cQPxvZBxTCiOJlrcdbh5JigAxXnQ2h5Yc0WinZAjcypHhrgZAL8BnwiKOECTDNFXgOtfbDQZDZD");
                     
-                }
-                else if (res.Count() > 0 && LoginType.ToUpper() == "TWITTER")
-                {
-                    bool result = SocialMediaAuthentication.checkTwitterAccessToken(UserName, "806837785-trTr0ObdqaW0owy1N0WXJFh6OGSlgUH74nh3qoHO", "w5j7WPwHWwY4DSfJ82tRVZF7SBogZJ6XABptVt431uOowvwFKC");
-                }
-                else if (res.Count() > 0 && LoginType.ToUpper() == "GOOGLEPLUS")
-                {
-                    bool result = SocialMediaAuthentication.CheckGooglePlusAccessToken("eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk2MmM2NTc0MjVhNGE3YWE0ZGFhM2FiNGNlNjU0NWZhOGM0ZTAxYmYifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXVkIjoiMTAzNjE4MjAxODU4OS1xcTVlNDlhNzNzYzRwMHE5ZjAyaXNmaW41NnNuYmNzZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExNzg4NzA0NTM3ODc4ODY4NTMyOCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiIxMDM2MTgyMDE4NTg5LWtxMjZmMnFpM2dhZGlvMWFnZ3QwcWFvYzEzZ3Z2NjQ2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJ6bml0ZXI4MUBnbWFpbC5jb20iLCJpYXQiOjE0NDYxNzcxMDgsImV4cCI6MTQ0NjE4MDcwOCwibmFtZSI6IktpYW4gU2VuZyIsInBpY3R1cmUiOiJodHRwczovL2xoNi5nb29nbGV1c2VyY29udGVudC5jb20vLWNKRVp5aUk5N05VL0FBQUFBQUFBQUFJL0FBQUFBQUFBQnkwLzdGU2dMYmIxd21ZL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLaWFuIiwiZmFtaWx5X25hbWUiOiJTZW5nIn0.Ja-18lzCKorBORYExsjLcZpjhgMzYKLB4Vx9QCzyEt1dqPlg7uzAVmqy0O6i3CzKB2i5bt6jCarBTh5Vnt4OdaVjeDyqAu1sz1v9r6VBCzqmtgDsJa1HLs_NZUK19uLPIIIPobAlAcryPGIDBsnIoDe0sVcs57dkbZXjpohnc8M8nnPNrYkFMQaG1yEuz8MwbgoXRqEKjt0gCetavSU2stAR21QrC4ojfXeAcF1EHvrZgv3UceejtI5Qu3ytajc2YYPCvRcPX6iE5JJUz4sHIu0GMfG-fri5CLgP9PkgpH36-uJpo14gqFMSeg21yXBJnQBhCDmrc4MLm0-I-w9E_g");                    
+                //}
+                //else if (res.Count() > 0 && LoginType.ToUpper() == "TWITTER")
+                //{
+                //    bool result = SocialMediaAuthentication.checkTwitterAccessToken(UserName, "806837785-trTr0ObdqaW0owy1N0WXJFh6OGSlgUH74nh3qoHO", "w5j7WPwHWwY4DSfJ82tRVZF7SBogZJ6XABptVt431uOowvwFKC");
+                //}
+                //else if (res.Count() > 0 && LoginType.ToUpper() == "GOOGLEPLUS")
+                //{
+                //    bool result = SocialMediaAuthentication.CheckGooglePlusAccessToken("eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk2MmM2NTc0MjVhNGE3YWE0ZGFhM2FiNGNlNjU0NWZhOGM0ZTAxYmYifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXVkIjoiMTAzNjE4MjAxODU4OS1xcTVlNDlhNzNzYzRwMHE5ZjAyaXNmaW41NnNuYmNzZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExNzg4NzA0NTM3ODc4ODY4NTMyOCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiIxMDM2MTgyMDE4NTg5LWtxMjZmMnFpM2dhZGlvMWFnZ3QwcWFvYzEzZ3Z2NjQ2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJ6bml0ZXI4MUBnbWFpbC5jb20iLCJpYXQiOjE0NDYxNzcxMDgsImV4cCI6MTQ0NjE4MDcwOCwibmFtZSI6IktpYW4gU2VuZyIsInBpY3R1cmUiOiJodHRwczovL2xoNi5nb29nbGV1c2VyY29udGVudC5jb20vLWNKRVp5aUk5N05VL0FBQUFBQUFBQUFJL0FBQUFBQUFBQnkwLzdGU2dMYmIxd21ZL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLaWFuIiwiZmFtaWx5X25hbWUiOiJTZW5nIn0.Ja-18lzCKorBORYExsjLcZpjhgMzYKLB4Vx9QCzyEt1dqPlg7uzAVmqy0O6i3CzKB2i5bt6jCarBTh5Vnt4OdaVjeDyqAu1sz1v9r6VBCzqmtgDsJa1HLs_NZUK19uLPIIIPobAlAcryPGIDBsnIoDe0sVcs57dkbZXjpohnc8M8nnPNrYkFMQaG1yEuz8MwbgoXRqEKjt0gCetavSU2stAR21QrC4ojfXeAcF1EHvrZgv3UceejtI5Qu3ytajc2YYPCvRcPX6iE5JJUz4sHIu0GMfG-fri5CLgP9PkgpH36-uJpo14gqFMSeg21yXBJnQBhCDmrc4MLm0-I-w9E_g");                    
 
-                }
+                //}
                 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = "Invalid UserID/Password" });
             }

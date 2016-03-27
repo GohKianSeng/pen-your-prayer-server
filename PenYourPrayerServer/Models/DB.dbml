@@ -276,4 +276,17 @@
     <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_UpdateUserMobileDeviceInformation" Method="usp_UpdateUserMobileDeviceInformation">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="MobilePlatform" Parameter="mobilePlatform" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="PushNotificationID" Parameter="pushNotificationID" Type="System.String" DbType="VarChar(200)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UpdateUserSocialInformation" Method="usp_UpdateUserSocialInformation">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="DisplayName" Parameter="displayName" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="SocialEmail" Parameter="socialEmail" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ProfilePictureURL" Parameter="profilePictureURL" Type="System.String" DbType="VarChar(200)" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>
