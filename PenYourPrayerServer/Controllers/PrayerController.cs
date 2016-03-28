@@ -367,7 +367,6 @@ namespace PenYourPrayerServer.Controllers
         {
             Int64 n;
 
-
             String id = "";
             foreach (PrayerRequest prayerRequest in pr)
             {

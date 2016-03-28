@@ -119,10 +119,13 @@ namespace PenYourPrayerServer.Controllers
             PenYourPrayerUser tuser = new PenYourPrayerUser();
             if (LoginType.ToUpper() == "FACEBOOK")
             {
-                socialresult = SocialMediaAuthentication.CheckFacebookAccessToken("CAAXXIYv53qcBABWf4lQvRT0Rm3UgBXcF1foQ4SRTNDp7eaSvDFLe4fZC4BFqsE1YYTcdUQw3UvZCRkmdWZAFbu2hav9UuHZAoE9VcpLkKvsSZC3IfLUrHglCygQ5XbZBcH0ORI9t2QzKAjggPsrORxmVgovoHZCzl4wV56mv9cQPxvZBxTCiOJlrcdbh5JigAxXnQ2h5Yc0WinZAjcypHhrgZAL8BnwiKOECTDNFXgOtfbDQZDZD", ref token);
+                socialresult = SocialMediaAuthentication.CheckFacebookAccessToken(AccessToken, ref token);
                 if (socialresult)
                 {
-                    //user.
+                    FacebookDebugToken fbtoken = (FacebookDebugToken)token;
+                    tuser.ProfilePictureURL = fbtoken.data.usertoken.picture.data.url;
+                    tuser.DisplayName = fbtoken.data.usertoken.name;
+                    tuser.UserName = fbtoken.data.usertoken.email;
                 }
             }
             //else if (LoginType.ToUpper() == "TWITTER")
@@ -141,6 +144,12 @@ namespace PenYourPrayerServer.Controllers
                     
                 }   
             }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = "Invalid Social Login" });
+            }
+
+
             if (!socialresult)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = "Invalid Social Login" });

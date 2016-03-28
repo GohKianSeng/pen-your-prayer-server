@@ -18,10 +18,17 @@ namespace PenYourPrayerServer.Supporting
             using (WebClient client = new WebClient())
             {
                 string data = client.DownloadString("https://graph.facebook.com/debug_token?access_token=1643913965854375|k20-5EWrMw-Y3HQK9KpriMvqtaI&input_token=" + accessToken);
+                string data2 = client.DownloadString("https://graph.facebook.com/me?fields=id,name,email,picture.type(large)&access_token=" + accessToken);
 
                 
                 JavaScriptSerializer serializer1 = new JavaScriptSerializer();
                 FacebookDebugToken token = serializer1.Deserialize<FacebookDebugToken>(data);
+
+                JavaScriptSerializer serializer2 = new JavaScriptSerializer();
+                token.data.usertoken = serializer2.Deserialize<FacebookUserToken>(data2);
+
+                if (token == null)
+                    return false;
 
                 fbToken = token;
                 return token.data.is_valid;                
@@ -171,6 +178,26 @@ namespace PenYourPrayerServer.Supporting
         }
     }
 
+    public class FacebookUserToken
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public string email { get; set; }
+        public FacebookPicture picture { get; set; }
+
+        public class FacebookPicture
+        {
+            public FacebookPictureData data;
+
+        }
+
+        public class FacebookPictureData
+        {
+            public bool is_silhouette { get; set; }
+            public string url { get; set; }
+        }
+    }
+
     public class FacebookDebugToken
     {
         public FacebookDebugTokenData data { get; set; }
@@ -183,6 +210,7 @@ namespace PenYourPrayerServer.Supporting
             public long issued_at { get; set; }
             public bool is_valid { get; set; }
             public string user_id { get; set; }
+            public FacebookUserToken usertoken { get; set; }
 
         }
     }
