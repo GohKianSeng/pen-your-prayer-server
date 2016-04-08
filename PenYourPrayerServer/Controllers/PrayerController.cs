@@ -291,6 +291,18 @@ namespace PenYourPrayerServer.Controllers
             }
         }
 
+        [Route("UpdatePrayerAnswered")]
+        public HttpResponseMessage UpdatePrayerAnswered(string QueueActionGUID, string PrayerID, PrayerAnswered p)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                String res = "";
+                db.usp_UpdatePrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(p.AnsweredID), p.Answered, p.TouchedWhen.ToUniversalTime(), ref res);
+                return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+            }
+        }
+
         [Route("AddNewPrayerRequest")]
         public HttpResponseMessage AddNewPrayerRequest(string QueueActionGUID, PrayerRequest p)
         {

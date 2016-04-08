@@ -289,4 +289,13 @@
     <Parameter Name="ProfilePictureURL" Parameter="profilePictureURL" Type="System.String" DbType="VarChar(200)" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_UpdatePrayerAnswered" Method="usp_UpdatePrayerAnswered">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="AnsweredID" Parameter="answeredID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Answer" Parameter="answer" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="TouchedWhen" Parameter="touchedWhen" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>
