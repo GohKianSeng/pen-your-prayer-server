@@ -17,12 +17,8 @@ namespace PenYourPrayerServer.Models.Struct
         public string WhoName { get; set; }
         public string WhoProfilePicture { get; set; }
         public string Comment { get; set; }
-
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime CreatedWhen;
-
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime TouchedWhen;
+        public long CreatedWhen;
+        public long TouchedWhen;
     }
 
     [XmlRootAttribute("AllComments")]

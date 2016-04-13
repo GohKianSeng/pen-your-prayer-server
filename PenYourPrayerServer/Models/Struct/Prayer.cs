@@ -13,13 +13,12 @@ namespace PenYourPrayerServer.Models.Struct
 
         public long PrayerID { get; set; }
         
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime TouchedWhen { get; set; }
-
-        [JsonConverter(typeof(CustomDateTimeConverter))]       
-        public DateTime CreatedWhen { get; set; }
+        public long TouchedWhen { get; set; }
+      
+        public long CreatedWhen { get; set; }
 
         public string Content { get; set; }
+
         public List<Friends> selectedFriends { get; set; }
 
         public bool publicView { get; set; }

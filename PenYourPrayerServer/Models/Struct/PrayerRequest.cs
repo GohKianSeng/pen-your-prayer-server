@@ -15,15 +15,9 @@ namespace PenYourPrayerServer.Models.Struct
         public string Description { get; set; }
         public bool Answered { get; set; }
         public string AnswerComment { get; set; }
-
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime AnsweredWhen;
-
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime CreatedWhen;
-
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime TouchedWhen;
+        public long AnsweredWhen;
+        public long CreatedWhen;
+        public long TouchedWhen;
 
         public List<PrayerRequestAttachment> attachments { get; set; }
 
@@ -40,7 +34,7 @@ namespace PenYourPrayerServer.Models.Struct
             pr.Answered = c.Answered;
             if (pr.AnsweredWhen != null && pr.Answered)
             {
-                pr.AnsweredWhen = (DateTime)c.AnsweredWhen;
+                pr.AnsweredWhen = (long)c.AnsweredWhen;
             }
             return pr;
         }

@@ -39,13 +39,11 @@ namespace PenYourPrayerServer.Controllers
                     }
                 }
                 String res = "";
-                db.usp_AddQueueAction((long?)user.Id, prayer.IfExecutedGUID, ref res);
-                if(res.ToUpper() == "OK")
-                    db.usp_AddNewPrayer((long?)user.Id, prayer.Content, prayer.CreatedWhen.ToUniversalTime(), prayer.TouchedWhen.ToUniversalTime(), prayer.publicView, selectedFriends, prayer.IfExecutedGUID, ref prayerid);
-                else
+                db.usp_AddNewPrayer((long?)user.Id, prayer.Content, prayer.CreatedWhen, prayer.TouchedWhen, prayer.publicView, selectedFriends, prayer.IfExecutedGUID, ref res, ref prayerid);
+                if(res.ToUpper() != "OK")                                   
                 {
                     db.usp_GetCreatedPrayerFromQueueActionGUID((long?)user.Id, prayer.IfExecutedGUID, ref prayerid);
-                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "EXISTS-" + prayerid.ToString() });
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
                 }
 
                 if (prayer.attachments != null)
@@ -91,8 +89,8 @@ namespace PenYourPrayerServer.Controllers
                     prayer.PrayerID = t.PrayerID;
                     var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
                     
-                    prayer.TouchedWhen = new DateTime(t.TouchedWhen.Ticks, DateTimeKind.Local).AddTicks(offset.Ticks);
-                    prayer.CreatedWhen = new DateTime(t.CreatedWhen.Ticks, DateTimeKind.Local).AddTicks(offset.Ticks);
+                    prayer.TouchedWhen = t.TouchedWhen;
+                    prayer.CreatedWhen = t.CreatedWhen;
                     prayer.Content = t.PrayerContent;
                     prayer.publicView = t.PublicView;
                     prayer.IfExecutedGUID = t.QueueActionGUID;
@@ -207,7 +205,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 long? CommentID = -1;
-                db.usp_AddNewPrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.OwnerPrayerID), p.Comment, p.CreatedWhen.ToUniversalTime(), p.TouchedWhen.ToUniversalTime(), ref res, ref CommentID);
+                db.usp_AddNewPrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.OwnerPrayerID), p.Comment, p.CreatedWhen, p.TouchedWhen, ref res, ref CommentID);
                 if (res.ToUpper() == "OK")
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + CommentID.ToString() });
                 else
@@ -243,7 +241,7 @@ namespace PenYourPrayerServer.Controllers
             using (DBDataContext db = new DBDataContext())
             {
                 String res = "";               
-                db.usp_UpdatePrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.CommentID), p.Comment, p.TouchedWhen.ToUniversalTime(), ref res);
+                db.usp_UpdatePrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.CommentID), p.Comment, p.TouchedWhen, ref res);
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
@@ -283,7 +281,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 long? AnsweredID = -1;
-                db.usp_AddNewPrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(p.OwnerPrayerID), p.Answered, p.CreatedWhen.ToUniversalTime(), p.TouchedWhen.ToUniversalTime(), ref res, ref AnsweredID);
+                db.usp_AddNewPrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(p.OwnerPrayerID), p.Answered, p.CreatedWhen, p.TouchedWhen, ref res, ref AnsweredID);
                 if (res.ToUpper() == "OK")
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + AnsweredID.ToString() });
                 else
@@ -298,8 +296,29 @@ namespace PenYourPrayerServer.Controllers
             using (DBDataContext db = new DBDataContext())
             {
                 String res = "";
-                db.usp_UpdatePrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(p.AnsweredID), p.Answered, p.TouchedWhen.ToUniversalTime(), ref res);
+                db.usp_UpdatePrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(p.AnsweredID), p.Answered, p.TouchedWhen, ref res);
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+            }
+        }
+
+        [HttpGet]
+        [Route("DeletePrayerAnswered")]
+        public HttpResponseMessage DeletePrayerAnswered(string QueueActionGUID, string AnsweredID)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                try
+                {
+                    String res = "";
+                    db.usp_DeletePrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(AnsweredID), ref res);
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "NOTEXISTS" });
+                }
             }
         }
 
@@ -311,7 +330,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 long? PrayerRequestID = -1;
-                db.usp_AddNewPrayerRequest(QueueActionGUID, (long?)user.Id, p.Subject, p.Description, p.CreatedWhen.ToUniversalTime(), p.TouchedWhen.ToUniversalTime(), ref res, ref PrayerRequestID);
+                db.usp_AddNewPrayerRequest(QueueActionGUID, (long?)user.Id, p.Subject, p.Description, p.CreatedWhen, p.TouchedWhen, ref res, ref PrayerRequestID);
                 if (res.ToUpper() != "OK")                    
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
 
@@ -356,9 +375,9 @@ namespace PenYourPrayerServer.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "NOTEXISTS-" + p.PrayerRequestID });
                 }
                 if(p.Answered)
-                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, p.AnsweredWhen.ToUniversalTime(), p.TouchedWhen.ToUniversalTime(), ref res);
+                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, p.AnsweredWhen, p.TouchedWhen, ref res);
                 else
-                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, null, p.TouchedWhen.ToUniversalTime(), ref res);
+                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, null, p.TouchedWhen, ref res);
                 if (res.ToUpper() != "OK")
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
 
