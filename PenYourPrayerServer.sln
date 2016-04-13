@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PenYourPrayerServer", "PenY
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database1", "Database1\Database1.sqlproj", "{81CA39FC-B6E7-45A1-A878-6CFDB7A4A473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{40AE035D-2D0A-439E-9F92-0BF251F38A9A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{81CA39FC-B6E7-45A1-A878-6CFDB7A4A473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81CA39FC-B6E7-45A1-A878-6CFDB7A4A473}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81CA39FC-B6E7-45A1-A878-6CFDB7A4A473}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{40AE035D-2D0A-439E-9F92-0BF251F38A9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40AE035D-2D0A-439E-9F92-0BF251F38A9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40AE035D-2D0A-439E-9F92-0BF251F38A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40AE035D-2D0A-439E-9F92-0BF251F38A9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

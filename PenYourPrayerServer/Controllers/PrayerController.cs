@@ -142,7 +142,7 @@ namespace PenYourPrayerServer.Controllers
                 var json = formatter.SerializerSettings;
                 json.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.RoundtripKind;
 
-                return Request.CreateResponse(HttpStatusCode.OK, latestprayer, formatter);
+                return Request.CreateResponse(HttpStatusCode.OK, latestprayer);
                 //return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }

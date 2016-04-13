@@ -39,7 +39,7 @@ namespace PenYourPrayerServer.Supporting.HMAC
             {
                 using (DBDataContext db = new DBDataContext())
                 {
-                    List<usp_GetUserInformationResult> d = db.usp_GetUserInformation("Email", "mail@pyptesting.com").ToList();
+                    List<usp_GetUserInformationResult> d = db.usp_GetUserInformation("GooglePlus", "117887045378788685328").ToList();
                     PenYourPrayerIdentity identity = new PenYourPrayerIdentity(d.ElementAt(0).ID, d.ElementAt(0).LoginType, d.ElementAt(0).UserName)
                     {
 

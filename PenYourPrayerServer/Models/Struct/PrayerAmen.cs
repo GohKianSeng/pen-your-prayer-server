@@ -11,12 +11,8 @@ namespace PenYourPrayerServer.Models.Struct
     {
         public string AmenID { get; set; }
         public string UserID { get; set; }
-        
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime CreatedWhen;
-
-        [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime TouchedWhen;
+        public long CreatedWhen;
+        public long TouchedWhen;
     }
 
     [XmlRootAttribute("AllAmen")]
