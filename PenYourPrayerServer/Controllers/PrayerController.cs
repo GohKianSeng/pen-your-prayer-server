@@ -75,7 +75,7 @@ namespace PenYourPrayerServer.Controllers
 
         [HttpGet]
         [Route("GetPastOthersPrayers")]
-        public HttpResponseMessage GetLatestOthersPrayers(string PrayerID, long LastPrayerID)
+        public HttpResponseMessage GetPastOthersPrayers(long LastPrayerID)
         {
             PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
             using (DBDataContext db = new DBDataContext())
@@ -145,7 +145,7 @@ namespace PenYourPrayerServer.Controllers
 
         [HttpGet]
         [Route("GetLatestOthersPrayers")]
-        public HttpResponseMessage GetLatestOthersPrayers(string PrayerID)
+        public HttpResponseMessage GetLatestOthersPrayers(string useless)
         {
             PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
             using (DBDataContext db = new DBDataContext())
@@ -159,6 +159,7 @@ namespace PenYourPrayerServer.Controllers
                     prayer.PrayerID = t.PrayerID;
                     var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
 
+                    prayer.UserID = t.UserID;
                     prayer.TouchedWhen = t.TouchedWhen;
                     prayer.CreatedWhen = t.CreatedWhen;
                     prayer.Content = t.PrayerContent;
@@ -228,7 +229,7 @@ namespace PenYourPrayerServer.Controllers
                     Prayer prayer = new Prayer();
                     prayer.PrayerID = t.PrayerID;
                     var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
-                    
+                    prayer.UserID = user.Id;
                     prayer.TouchedWhen = t.TouchedWhen;
                     prayer.CreatedWhen = t.CreatedWhen;
                     prayer.Content = t.PrayerContent;
