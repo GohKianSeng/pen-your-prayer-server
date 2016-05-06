@@ -11,6 +11,9 @@ namespace PenYourPrayerServer.Models.Struct
     {
         public string AmenID { get; set; }
         public string UserID { get; set; }
+        public string WhoID { get; set; }
+        public string WhoName { get; set; }
+        public string WhoProfilePicture { get; set; }
         public long CreatedWhen;
         public long TouchedWhen;
     }
