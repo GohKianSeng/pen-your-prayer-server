@@ -1,13 +1,15 @@
 ﻿using PenYourPrayerServer.Supporting.HMAC;
 using System;
+using System.Xml.Serialization;
 
 
 namespace PenYourPrayerServer.Models.Struct
 {
+    [XmlRootAttribute("OwnerProfile")]
     public class PenYourPrayerUser
     {
 
-        public long Id { get; set; }
+        public long ID { get; set; }
         public string LoginType { get; set; }
         public string UserName { get; set; }
         public string DisplayName { get; set; }
@@ -24,7 +26,7 @@ namespace PenYourPrayerServer.Models.Struct
         public static explicit operator PenYourPrayerUser(PenYourPrayerIdentity c)
         {
             PenYourPrayerUser pyp = new PenYourPrayerUser();
-            pyp.Id = c.Id;
+            pyp.ID = c.ID;
             pyp.LoginType = c.LoginType;
             pyp.UserName = c.UserName;
             pyp.DisplayName = c.DisplayName;
@@ -33,5 +35,6 @@ namespace PenYourPrayerServer.Models.Struct
             pyp.PushNotificationID = c.PushNotificationID;
             return pyp;
         }
+
     }
 }

@@ -239,13 +239,6 @@ namespace PenYourPrayerServer.Models
 			return ((ISingleResult<usp_GetLatestPrayerRequestResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetLatestPrayers")]
-		public ISingleResult<usp_GetLatestPrayersResult> usp_GetLatestPrayers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, prayerID);
-			return ((ISingleResult<usp_GetLatestPrayersResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetPrayerAttachmentInformation")]
 		public int usp_GetPrayerAttachmentInformation([global::System.Data.Linq.Mapping.ParameterAttribute(Name="AttachmentID", DbType="BigInt")] System.Nullable<long> attachmentID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Filename", DbType="VarChar(128)")] ref string filename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="OwnerID", DbType="BigInt")] ref System.Nullable<long> ownerID)
 		{
@@ -327,6 +320,13 @@ namespace PenYourPrayerServer.Models
 			return ((int)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetLatestFriendsPrayers")]
+		public ISingleResult<usp_GetLatestFriendsPrayersResult> usp_GetLatestFriendsPrayers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID);
+			return ((ISingleResult<usp_GetLatestFriendsPrayersResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetLatestOthersPrayers")]
 		public ISingleResult<usp_GetLatestOthersPrayersResult> usp_GetLatestOthersPrayers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID)
 		{
@@ -334,18 +334,18 @@ namespace PenYourPrayerServer.Models
 			return ((ISingleResult<usp_GetLatestOthersPrayersResult>)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetLatestPrayers")]
+		public ISingleResult<usp_GetLatestPrayersResult> usp_GetLatestPrayers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PrayerID", DbType="BigInt")] System.Nullable<long> prayerID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, prayerID);
+			return ((ISingleResult<usp_GetLatestPrayersResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetPastOthersPrayers")]
 		public ISingleResult<usp_GetPastOthersPrayersResult> usp_GetPastOthersPrayers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LastPrayerID", DbType="BigInt")] System.Nullable<long> lastPrayerID)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, lastPrayerID);
 			return ((ISingleResult<usp_GetPastOthersPrayersResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetLatestFriendsPrayers")]
-		public ISingleResult<usp_GetLatestFriendsPrayersResult> usp_GetLatestFriendsPrayers([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID);
-			return ((ISingleResult<usp_GetLatestFriendsPrayersResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_GetPastFriendsPrayers")]
@@ -609,230 +609,6 @@ namespace PenYourPrayerServer.Models
 				if ((this._Attachments != value))
 				{
 					this._Attachments = value;
-				}
-			}
-		}
-	}
-	
-	public partial class usp_GetLatestPrayersResult
-	{
-		
-		private long _TouchedWhen;
-		
-		private long _CreatedWhen;
-		
-		private long _UserID;
-		
-		private long _PrayerID;
-		
-		private string _PrayerContent;
-		
-		private bool _PublicView;
-		
-		private string _QueueActionGUID;
-		
-		private System.Xml.Linq.XElement _TagFriends;
-		
-		private System.Xml.Linq.XElement _Attachments;
-		
-		private System.Xml.Linq.XElement _Comment;
-		
-		private System.Xml.Linq.XElement _Answers;
-		
-		private System.Xml.Linq.XElement _Amen;
-		
-		public usp_GetLatestPrayersResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TouchedWhen", DbType="BigInt NOT NULL")]
-		public long TouchedWhen
-		{
-			get
-			{
-				return this._TouchedWhen;
-			}
-			set
-			{
-				if ((this._TouchedWhen != value))
-				{
-					this._TouchedWhen = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedWhen", DbType="BigInt NOT NULL")]
-		public long CreatedWhen
-		{
-			get
-			{
-				return this._CreatedWhen;
-			}
-			set
-			{
-				if ((this._CreatedWhen != value))
-				{
-					this._CreatedWhen = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="BigInt NOT NULL")]
-		public long UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					this._UserID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerID", DbType="BigInt NOT NULL")]
-		public long PrayerID
-		{
-			get
-			{
-				return this._PrayerID;
-			}
-			set
-			{
-				if ((this._PrayerID != value))
-				{
-					this._PrayerID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerContent", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PrayerContent
-		{
-			get
-			{
-				return this._PrayerContent;
-			}
-			set
-			{
-				if ((this._PrayerContent != value))
-				{
-					this._PrayerContent = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublicView", DbType="Bit NOT NULL")]
-		public bool PublicView
-		{
-			get
-			{
-				return this._PublicView;
-			}
-			set
-			{
-				if ((this._PublicView != value))
-				{
-					this._PublicView = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueueActionGUID", DbType="VarChar(128)")]
-		public string QueueActionGUID
-		{
-			get
-			{
-				return this._QueueActionGUID;
-			}
-			set
-			{
-				if ((this._QueueActionGUID != value))
-				{
-					this._QueueActionGUID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
-		public System.Xml.Linq.XElement TagFriends
-		{
-			get
-			{
-				return this._TagFriends;
-			}
-			set
-			{
-				if ((this._TagFriends != value))
-				{
-					this._TagFriends = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Attachments", DbType="Xml")]
-		public System.Xml.Linq.XElement Attachments
-		{
-			get
-			{
-				return this._Attachments;
-			}
-			set
-			{
-				if ((this._Attachments != value))
-				{
-					this._Attachments = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Xml")]
-		public System.Xml.Linq.XElement Comment
-		{
-			get
-			{
-				return this._Comment;
-			}
-			set
-			{
-				if ((this._Comment != value))
-				{
-					this._Comment = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answers", DbType="Xml")]
-		public System.Xml.Linq.XElement Answers
-		{
-			get
-			{
-				return this._Answers;
-			}
-			set
-			{
-				if ((this._Answers != value))
-				{
-					this._Answers = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amen", DbType="Xml")]
-		public System.Xml.Linq.XElement Amen
-		{
-			get
-			{
-				return this._Amen;
-			}
-			set
-			{
-				if ((this._Amen != value))
-				{
-					this._Amen = value;
 				}
 			}
 		}
@@ -1214,454 +990,6 @@ namespace PenYourPrayerServer.Models
 		}
 	}
 	
-	public partial class usp_GetLatestOthersPrayersResult
-	{
-		
-		private long _TouchedWhen;
-		
-		private long _CreatedWhen;
-		
-		private long _UserID;
-		
-		private long _PrayerID;
-		
-		private string _PrayerContent;
-		
-		private bool _PublicView;
-		
-		private string _QueueActionGUID;
-		
-		private System.Xml.Linq.XElement _TagFriends;
-		
-		private System.Xml.Linq.XElement _Attachments;
-		
-		private System.Xml.Linq.XElement _Comment;
-		
-		private System.Xml.Linq.XElement _Answers;
-		
-		private System.Xml.Linq.XElement _Amen;
-		
-		public usp_GetLatestOthersPrayersResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TouchedWhen", DbType="BigInt NOT NULL")]
-		public long TouchedWhen
-		{
-			get
-			{
-				return this._TouchedWhen;
-			}
-			set
-			{
-				if ((this._TouchedWhen != value))
-				{
-					this._TouchedWhen = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedWhen", DbType="BigInt NOT NULL")]
-		public long CreatedWhen
-		{
-			get
-			{
-				return this._CreatedWhen;
-			}
-			set
-			{
-				if ((this._CreatedWhen != value))
-				{
-					this._CreatedWhen = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="BigInt NOT NULL")]
-		public long UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					this._UserID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerID", DbType="BigInt NOT NULL")]
-		public long PrayerID
-		{
-			get
-			{
-				return this._PrayerID;
-			}
-			set
-			{
-				if ((this._PrayerID != value))
-				{
-					this._PrayerID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerContent", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PrayerContent
-		{
-			get
-			{
-				return this._PrayerContent;
-			}
-			set
-			{
-				if ((this._PrayerContent != value))
-				{
-					this._PrayerContent = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublicView", DbType="Bit NOT NULL")]
-		public bool PublicView
-		{
-			get
-			{
-				return this._PublicView;
-			}
-			set
-			{
-				if ((this._PublicView != value))
-				{
-					this._PublicView = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueueActionGUID", DbType="VarChar(128)")]
-		public string QueueActionGUID
-		{
-			get
-			{
-				return this._QueueActionGUID;
-			}
-			set
-			{
-				if ((this._QueueActionGUID != value))
-				{
-					this._QueueActionGUID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
-		public System.Xml.Linq.XElement TagFriends
-		{
-			get
-			{
-				return this._TagFriends;
-			}
-			set
-			{
-				if ((this._TagFriends != value))
-				{
-					this._TagFriends = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Attachments", DbType="Xml")]
-		public System.Xml.Linq.XElement Attachments
-		{
-			get
-			{
-				return this._Attachments;
-			}
-			set
-			{
-				if ((this._Attachments != value))
-				{
-					this._Attachments = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Xml")]
-		public System.Xml.Linq.XElement Comment
-		{
-			get
-			{
-				return this._Comment;
-			}
-			set
-			{
-				if ((this._Comment != value))
-				{
-					this._Comment = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answers", DbType="Xml")]
-		public System.Xml.Linq.XElement Answers
-		{
-			get
-			{
-				return this._Answers;
-			}
-			set
-			{
-				if ((this._Answers != value))
-				{
-					this._Answers = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amen", DbType="Xml")]
-		public System.Xml.Linq.XElement Amen
-		{
-			get
-			{
-				return this._Amen;
-			}
-			set
-			{
-				if ((this._Amen != value))
-				{
-					this._Amen = value;
-				}
-			}
-		}
-	}
-	
-	public partial class usp_GetPastOthersPrayersResult
-	{
-		
-		private long _TouchedWhen;
-		
-		private long _CreatedWhen;
-		
-		private long _UserID;
-		
-		private long _PrayerID;
-		
-		private string _PrayerContent;
-		
-		private bool _PublicView;
-		
-		private string _QueueActionGUID;
-		
-		private System.Xml.Linq.XElement _TagFriends;
-		
-		private System.Xml.Linq.XElement _Attachments;
-		
-		private System.Xml.Linq.XElement _Comment;
-		
-		private System.Xml.Linq.XElement _Answers;
-		
-		private System.Xml.Linq.XElement _Amen;
-		
-		public usp_GetPastOthersPrayersResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TouchedWhen", DbType="BigInt NOT NULL")]
-		public long TouchedWhen
-		{
-			get
-			{
-				return this._TouchedWhen;
-			}
-			set
-			{
-				if ((this._TouchedWhen != value))
-				{
-					this._TouchedWhen = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedWhen", DbType="BigInt NOT NULL")]
-		public long CreatedWhen
-		{
-			get
-			{
-				return this._CreatedWhen;
-			}
-			set
-			{
-				if ((this._CreatedWhen != value))
-				{
-					this._CreatedWhen = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="BigInt NOT NULL")]
-		public long UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					this._UserID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerID", DbType="BigInt NOT NULL")]
-		public long PrayerID
-		{
-			get
-			{
-				return this._PrayerID;
-			}
-			set
-			{
-				if ((this._PrayerID != value))
-				{
-					this._PrayerID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerContent", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string PrayerContent
-		{
-			get
-			{
-				return this._PrayerContent;
-			}
-			set
-			{
-				if ((this._PrayerContent != value))
-				{
-					this._PrayerContent = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublicView", DbType="Bit NOT NULL")]
-		public bool PublicView
-		{
-			get
-			{
-				return this._PublicView;
-			}
-			set
-			{
-				if ((this._PublicView != value))
-				{
-					this._PublicView = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueueActionGUID", DbType="VarChar(128)")]
-		public string QueueActionGUID
-		{
-			get
-			{
-				return this._QueueActionGUID;
-			}
-			set
-			{
-				if ((this._QueueActionGUID != value))
-				{
-					this._QueueActionGUID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
-		public System.Xml.Linq.XElement TagFriends
-		{
-			get
-			{
-				return this._TagFriends;
-			}
-			set
-			{
-				if ((this._TagFriends != value))
-				{
-					this._TagFriends = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Attachments", DbType="Xml")]
-		public System.Xml.Linq.XElement Attachments
-		{
-			get
-			{
-				return this._Attachments;
-			}
-			set
-			{
-				if ((this._Attachments != value))
-				{
-					this._Attachments = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Xml")]
-		public System.Xml.Linq.XElement Comment
-		{
-			get
-			{
-				return this._Comment;
-			}
-			set
-			{
-				if ((this._Comment != value))
-				{
-					this._Comment = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answers", DbType="Xml")]
-		public System.Xml.Linq.XElement Answers
-		{
-			get
-			{
-				return this._Answers;
-			}
-			set
-			{
-				if ((this._Answers != value))
-				{
-					this._Answers = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amen", DbType="Xml")]
-		public System.Xml.Linq.XElement Amen
-		{
-			get
-			{
-				return this._Amen;
-			}
-			set
-			{
-				if ((this._Amen != value))
-				{
-					this._Amen = value;
-				}
-			}
-		}
-	}
-	
 	public partial class usp_GetLatestFriendsPrayersResult
 	{
 		
@@ -1678,6 +1006,8 @@ namespace PenYourPrayerServer.Models
 		private bool _PublicView;
 		
 		private string _QueueActionGUID;
+		
+		private System.Xml.Linq.XElement _OwnerProfile;
 		
 		private System.Xml.Linq.XElement _TagFriends;
 		
@@ -1805,6 +1135,22 @@ namespace PenYourPrayerServer.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OwnerProfile", DbType="Xml")]
+		public System.Xml.Linq.XElement OwnerProfile
+		{
+			get
+			{
+				return this._OwnerProfile;
+			}
+			set
+			{
+				if ((this._OwnerProfile != value))
+				{
+					this._OwnerProfile = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
 		public System.Xml.Linq.XElement TagFriends
 		{
@@ -1886,7 +1232,7 @@ namespace PenYourPrayerServer.Models
 		}
 	}
 	
-	public partial class usp_GetPastFriendsPrayersResult
+	public partial class usp_GetLatestOthersPrayersResult
 	{
 		
 		private long _TouchedWhen;
@@ -1903,6 +1249,8 @@ namespace PenYourPrayerServer.Models
 		
 		private string _QueueActionGUID;
 		
+		private System.Xml.Linq.XElement _OwnerProfile;
+		
 		private System.Xml.Linq.XElement _TagFriends;
 		
 		private System.Xml.Linq.XElement _Attachments;
@@ -1913,7 +1261,7 @@ namespace PenYourPrayerServer.Models
 		
 		private System.Xml.Linq.XElement _Amen;
 		
-		public usp_GetPastFriendsPrayersResult()
+		public usp_GetLatestOthersPrayersResult()
 		{
 		}
 		
@@ -2029,6 +1377,22 @@ namespace PenYourPrayerServer.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OwnerProfile", DbType="Xml")]
+		public System.Xml.Linq.XElement OwnerProfile
+		{
+			get
+			{
+				return this._OwnerProfile;
+			}
+			set
+			{
+				if ((this._OwnerProfile != value))
+				{
+					this._OwnerProfile = value;
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
 		public System.Xml.Linq.XElement TagFriends
 		{
@@ -2105,6 +1469,516 @@ namespace PenYourPrayerServer.Models
 				if ((this._Amen != value))
 				{
 					this._Amen = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetLatestPrayersResult
+	{
+		
+		private long _TouchedWhen;
+		
+		private long _CreatedWhen;
+		
+		private long _UserID;
+		
+		private long _PrayerID;
+		
+		private string _PrayerContent;
+		
+		private bool _PublicView;
+		
+		private string _QueueActionGUID;
+		
+		private System.Xml.Linq.XElement _OwnerProfile;
+		
+		private System.Xml.Linq.XElement _TagFriends;
+		
+		private System.Xml.Linq.XElement _Attachments;
+		
+		private System.Xml.Linq.XElement _Comment;
+		
+		private System.Xml.Linq.XElement _Answers;
+		
+		private System.Xml.Linq.XElement _Amen;
+		
+		public usp_GetLatestPrayersResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TouchedWhen", DbType="BigInt NOT NULL")]
+		public long TouchedWhen
+		{
+			get
+			{
+				return this._TouchedWhen;
+			}
+			set
+			{
+				if ((this._TouchedWhen != value))
+				{
+					this._TouchedWhen = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedWhen", DbType="BigInt NOT NULL")]
+		public long CreatedWhen
+		{
+			get
+			{
+				return this._CreatedWhen;
+			}
+			set
+			{
+				if ((this._CreatedWhen != value))
+				{
+					this._CreatedWhen = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="BigInt NOT NULL")]
+		public long UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					this._UserID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerID", DbType="BigInt NOT NULL")]
+		public long PrayerID
+		{
+			get
+			{
+				return this._PrayerID;
+			}
+			set
+			{
+				if ((this._PrayerID != value))
+				{
+					this._PrayerID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerContent", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PrayerContent
+		{
+			get
+			{
+				return this._PrayerContent;
+			}
+			set
+			{
+				if ((this._PrayerContent != value))
+				{
+					this._PrayerContent = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublicView", DbType="Bit NOT NULL")]
+		public bool PublicView
+		{
+			get
+			{
+				return this._PublicView;
+			}
+			set
+			{
+				if ((this._PublicView != value))
+				{
+					this._PublicView = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueueActionGUID", DbType="VarChar(128)")]
+		public string QueueActionGUID
+		{
+			get
+			{
+				return this._QueueActionGUID;
+			}
+			set
+			{
+				if ((this._QueueActionGUID != value))
+				{
+					this._QueueActionGUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OwnerProfile", DbType="Xml")]
+		public System.Xml.Linq.XElement OwnerProfile
+		{
+			get
+			{
+				return this._OwnerProfile;
+			}
+			set
+			{
+				if ((this._OwnerProfile != value))
+				{
+					this._OwnerProfile = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
+		public System.Xml.Linq.XElement TagFriends
+		{
+			get
+			{
+				return this._TagFriends;
+			}
+			set
+			{
+				if ((this._TagFriends != value))
+				{
+					this._TagFriends = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Attachments", DbType="Xml")]
+		public System.Xml.Linq.XElement Attachments
+		{
+			get
+			{
+				return this._Attachments;
+			}
+			set
+			{
+				if ((this._Attachments != value))
+				{
+					this._Attachments = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Xml")]
+		public System.Xml.Linq.XElement Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this._Comment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answers", DbType="Xml")]
+		public System.Xml.Linq.XElement Answers
+		{
+			get
+			{
+				return this._Answers;
+			}
+			set
+			{
+				if ((this._Answers != value))
+				{
+					this._Answers = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amen", DbType="Xml")]
+		public System.Xml.Linq.XElement Amen
+		{
+			get
+			{
+				return this._Amen;
+			}
+			set
+			{
+				if ((this._Amen != value))
+				{
+					this._Amen = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetPastOthersPrayersResult
+	{
+		
+		private long _TouchedWhen;
+		
+		private long _CreatedWhen;
+		
+		private long _UserID;
+		
+		private long _PrayerID;
+		
+		private string _PrayerContent;
+		
+		private bool _PublicView;
+		
+		private string _QueueActionGUID;
+		
+		private System.Xml.Linq.XElement _OwnerProfile;
+		
+		private System.Xml.Linq.XElement _TagFriends;
+		
+		private System.Xml.Linq.XElement _Attachments;
+		
+		private System.Xml.Linq.XElement _Comment;
+		
+		private System.Xml.Linq.XElement _Answers;
+		
+		private System.Xml.Linq.XElement _Amen;
+		
+		public usp_GetPastOthersPrayersResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TouchedWhen", DbType="BigInt NOT NULL")]
+		public long TouchedWhen
+		{
+			get
+			{
+				return this._TouchedWhen;
+			}
+			set
+			{
+				if ((this._TouchedWhen != value))
+				{
+					this._TouchedWhen = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedWhen", DbType="BigInt NOT NULL")]
+		public long CreatedWhen
+		{
+			get
+			{
+				return this._CreatedWhen;
+			}
+			set
+			{
+				if ((this._CreatedWhen != value))
+				{
+					this._CreatedWhen = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="BigInt NOT NULL")]
+		public long UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					this._UserID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerID", DbType="BigInt NOT NULL")]
+		public long PrayerID
+		{
+			get
+			{
+				return this._PrayerID;
+			}
+			set
+			{
+				if ((this._PrayerID != value))
+				{
+					this._PrayerID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerContent", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PrayerContent
+		{
+			get
+			{
+				return this._PrayerContent;
+			}
+			set
+			{
+				if ((this._PrayerContent != value))
+				{
+					this._PrayerContent = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PublicView", DbType="Bit NOT NULL")]
+		public bool PublicView
+		{
+			get
+			{
+				return this._PublicView;
+			}
+			set
+			{
+				if ((this._PublicView != value))
+				{
+					this._PublicView = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QueueActionGUID", DbType="VarChar(128)")]
+		public string QueueActionGUID
+		{
+			get
+			{
+				return this._QueueActionGUID;
+			}
+			set
+			{
+				if ((this._QueueActionGUID != value))
+				{
+					this._QueueActionGUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OwnerProfile", DbType="Xml")]
+		public System.Xml.Linq.XElement OwnerProfile
+		{
+			get
+			{
+				return this._OwnerProfile;
+			}
+			set
+			{
+				if ((this._OwnerProfile != value))
+				{
+					this._OwnerProfile = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagFriends", DbType="Xml")]
+		public System.Xml.Linq.XElement TagFriends
+		{
+			get
+			{
+				return this._TagFriends;
+			}
+			set
+			{
+				if ((this._TagFriends != value))
+				{
+					this._TagFriends = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Attachments", DbType="Xml")]
+		public System.Xml.Linq.XElement Attachments
+		{
+			get
+			{
+				return this._Attachments;
+			}
+			set
+			{
+				if ((this._Attachments != value))
+				{
+					this._Attachments = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="Xml")]
+		public System.Xml.Linq.XElement Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this._Comment = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answers", DbType="Xml")]
+		public System.Xml.Linq.XElement Answers
+		{
+			get
+			{
+				return this._Answers;
+			}
+			set
+			{
+				if ((this._Answers != value))
+				{
+					this._Answers = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amen", DbType="Xml")]
+		public System.Xml.Linq.XElement Amen
+		{
+			get
+			{
+				return this._Amen;
+			}
+			set
+			{
+				if ((this._Amen != value))
+				{
+					this._Amen = value;
+				}
+			}
+		}
+	}
+	
+	public partial class usp_GetPastFriendsPrayersResult
+	{
+		
+		private long _PrayerID;
+		
+		public usp_GetPastFriendsPrayersResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrayerID", DbType="BigInt NOT NULL")]
+		public long PrayerID
+		{
+			get
+			{
+				return this._PrayerID;
+			}
+			set
+			{
+				if ((this._PrayerID != value))
+				{
+					this._PrayerID = value;
 				}
 			}
 		}

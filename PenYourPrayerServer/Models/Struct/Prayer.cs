@@ -10,6 +10,8 @@ namespace PenYourPrayerServer.Models.Struct
 {
     public class Prayer
     {
+        public PenYourPrayerUser OwnerProfile;
+
         public long UserID { get; set; }
 
         public long PrayerID { get; set; }

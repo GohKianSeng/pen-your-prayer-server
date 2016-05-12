@@ -39,10 +39,10 @@ namespace PenYourPrayerServer.Controllers
                     }
                 }
                 String res = "";
-                db.usp_AddNewPrayer((long?)user.Id, prayer.Content, prayer.CreatedWhen, prayer.TouchedWhen, prayer.publicView, selectedFriends, prayer.IfExecutedGUID, ref res, ref prayerid);
+                db.usp_AddNewPrayer((long?)user.ID, prayer.Content, prayer.CreatedWhen, prayer.TouchedWhen, prayer.publicView, selectedFriends, prayer.IfExecutedGUID, ref res, ref prayerid);
                 if(res.ToUpper() != "OK")                                   
                 {
-                    db.usp_GetCreatedPrayerFromQueueActionGUID((long?)user.Id, prayer.IfExecutedGUID, ref prayerid);
+                    db.usp_GetCreatedPrayerFromQueueActionGUID((long?)user.ID, prayer.IfExecutedGUID, ref prayerid);
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
                 }
 
@@ -52,14 +52,14 @@ namespace PenYourPrayerServer.Controllers
                     {
                         long? attachmentID = -1;
                         string extension = att.FileName.Substring(att.FileName.LastIndexOf('.'));
-                        string fileFrom = QuickReference.PrayerAttachmentImageTemp + @"\" + user.Id.ToString() + @"\" + att.GUID + extension;
-                        string fileTo = QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString() + @"\" + att.GUID + extension;
-                        if(!System.IO.Directory.Exists(QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString()))
-                            System.IO.Directory.CreateDirectory(QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString());
+                        string fileFrom = QuickReference.PrayerAttachmentImageTemp + @"\" + user.ID.ToString() + @"\" + att.GUID + extension;
+                        string fileTo = QuickReference.PrayerAttachmentImage + @"\" + user.ID.ToString() + @"\" + att.GUID + extension;
+                        if(!System.IO.Directory.Exists(QuickReference.PrayerAttachmentImage + @"\" + user.ID.ToString()))
+                            System.IO.Directory.CreateDirectory(QuickReference.PrayerAttachmentImage + @"\" + user.ID.ToString());
                         if (System.IO.File.Exists(fileFrom))
                         {
                             System.IO.File.Move(fileFrom, fileTo);
-                            db.usp_AddNewPrayerAttachment(prayerid, att.GUID + extension, att.OriginalFilePath, (long?)user.Id, ref attachmentID);
+                            db.usp_AddNewPrayerAttachment(prayerid, att.GUID + extension, att.OriginalFilePath, (long?)user.ID, ref attachmentID);
                         }
                         else
                         {
@@ -82,7 +82,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 List<Prayer> latestprayer = new List<Prayer>();
-                List<usp_GetPastOthersPrayersResult> p = db.usp_GetPastOthersPrayers((long?)user.Id, (long?)LastPrayerID).ToList();
+                List<usp_GetPastOthersPrayersResult> p = db.usp_GetPastOthersPrayers((long?)user.ID, (long?)LastPrayerID).ToList();
                 foreach (usp_GetPastOthersPrayersResult t in p)
                 {
                     Prayer prayer = new Prayer();
@@ -135,6 +135,12 @@ namespace PenYourPrayerServer.Controllers
                         prayer.amen = ((AllPrayerAmen)serializer.Deserialize(reader)).amen;
                         reader.Close();
                     }
+                    if (t.OwnerProfile != null)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(PenYourPrayerUser));
+                        TextReader reader = new StringReader(t.OwnerProfile.ToString());
+                        prayer.OwnerProfile = (PenYourPrayerUser)serializer.Deserialize(reader);
+                    }
 
                     latestprayer.Add(prayer);
                 }
@@ -153,7 +159,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 List<Prayer> latestprayer = new List<Prayer>();
-                List<usp_GetPastFriendsPrayersResult> p = db.usp_GetPastFriendsPrayers((long?)user.Id, (long?)LastPrayerID).ToList();
+                List<usp_GetPastFriendsPrayersResult> p = db.usp_GetPastFriendsPrayers((long?)user.ID, (long?)LastPrayerID).ToList();
                 foreach (usp_GetPastFriendsPrayersResult t in p)
                 {
                     Prayer prayer = new Prayer();
@@ -206,7 +212,12 @@ namespace PenYourPrayerServer.Controllers
                         prayer.amen = ((AllPrayerAmen)serializer.Deserialize(reader)).amen;
                         reader.Close();
                     }
-
+                    if (t.OwnerProfile != null)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(PenYourPrayerUser));
+                        TextReader reader = new StringReader(t.OwnerProfile.ToString());
+                        prayer.OwnerProfile = (PenYourPrayerUser)serializer.Deserialize(reader);
+                    }
                     latestprayer.Add(prayer);
                 }
 
@@ -224,7 +235,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 List<Prayer> latestprayer = new List<Prayer>();
-                List<usp_GetLatestOthersPrayersResult> p = db.usp_GetLatestOthersPrayers((long?)user.Id).ToList();
+                List<usp_GetLatestOthersPrayersResult> p = db.usp_GetLatestOthersPrayers((long?)user.ID).ToList();
                 foreach (usp_GetLatestOthersPrayersResult t in p)
                 {
                     Prayer prayer = new Prayer();
@@ -277,6 +288,12 @@ namespace PenYourPrayerServer.Controllers
                         prayer.amen = ((AllPrayerAmen)serializer.Deserialize(reader)).amen;
                         reader.Close();
                     }
+                    if (t.OwnerProfile != null)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(PenYourPrayerUser));
+                        TextReader reader = new StringReader(t.OwnerProfile.ToString());
+                        prayer.OwnerProfile = (PenYourPrayerUser)serializer.Deserialize(reader);
+                    }
 
                     latestprayer.Add(prayer);
                 }
@@ -295,7 +312,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 List<Prayer> latestprayer = new List<Prayer>();
-                List<usp_GetLatestFriendsPrayersResult> p = db.usp_GetLatestFriendsPrayers((long?)user.Id).ToList();
+                List<usp_GetLatestFriendsPrayersResult> p = db.usp_GetLatestFriendsPrayers((long?)user.ID).ToList();
                 foreach (usp_GetLatestFriendsPrayersResult t in p)
                 {
                     Prayer prayer = new Prayer();
@@ -348,6 +365,12 @@ namespace PenYourPrayerServer.Controllers
                         prayer.amen = ((AllPrayerAmen)serializer.Deserialize(reader)).amen;
                         reader.Close();
                     }
+                    if (t.OwnerProfile != null)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(PenYourPrayerUser));
+                        TextReader reader = new StringReader(t.OwnerProfile.ToString());
+                        prayer.OwnerProfile = (PenYourPrayerUser)serializer.Deserialize(reader);
+                    }
 
                     latestprayer.Add(prayer);
                 }
@@ -366,13 +389,13 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 List<Prayer> latestprayer = new List<Prayer>();
-                List<usp_GetLatestPrayersResult> p = db.usp_GetLatestPrayers((long?)user.Id, long.Parse(PrayerID)).ToList();
+                List<usp_GetLatestPrayersResult> p = db.usp_GetLatestPrayers((long?)user.ID, long.Parse(PrayerID)).ToList();
                 foreach (usp_GetLatestPrayersResult t in p)
                 {
                     Prayer prayer = new Prayer();
                     prayer.PrayerID = t.PrayerID;
                     var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
-                    prayer.UserID = user.Id;
+                    prayer.UserID = user.ID;
                     prayer.TouchedWhen = t.TouchedWhen;
                     prayer.CreatedWhen = t.CreatedWhen;
                     prayer.Content = t.PrayerContent;
@@ -418,6 +441,12 @@ namespace PenYourPrayerServer.Controllers
                         prayer.amen = ((AllPrayerAmen)serializer.Deserialize(reader)).amen;
                         reader.Close();
                     }
+                    if (t.OwnerProfile != null)
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(PenYourPrayerUser));
+                        TextReader reader = new StringReader(t.OwnerProfile.ToString());
+                        prayer.OwnerProfile = (PenYourPrayerUser)serializer.Deserialize(reader);
+                    }
 
                     latestprayer.Add(prayer);
                 }
@@ -435,7 +464,7 @@ namespace PenYourPrayerServer.Controllers
             using (DBDataContext db = new DBDataContext())
             {
                 String res = "";
-                db.usp_DeletePrayer(QueueActionGUID, (long?)user.Id, long.Parse(PrayerID));
+                db.usp_DeletePrayer(QueueActionGUID, (long?)user.ID, long.Parse(PrayerID));
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
@@ -448,7 +477,7 @@ namespace PenYourPrayerServer.Controllers
             using (DBDataContext db = new DBDataContext())
             {
                 String res = "";
-                db.usp_UpdatePrayerPublicView(QueueActionGUID, (long?)user.Id, long.Parse(PrayerID), PublicView, ref res);
+                db.usp_UpdatePrayerPublicView(QueueActionGUID, (long?)user.ID, long.Parse(PrayerID), PublicView, ref res);
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
@@ -472,7 +501,7 @@ namespace PenYourPrayerServer.Controllers
             using (DBDataContext db = new DBDataContext())
             {
                 String res = "";
-                db.usp_UpdatePrayerTagFriends(QueueActionGUID, (long?)user.Id, long.Parse(PrayerID), t, ref res);
+                db.usp_UpdatePrayerTagFriends(QueueActionGUID, (long?)user.ID, long.Parse(PrayerID), t, ref res);
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
@@ -485,7 +514,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 long? CommentID = -1;
-                db.usp_AddNewPrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.OwnerPrayerID), p.Comment, p.CreatedWhen, p.TouchedWhen, ref res, ref CommentID);
+                db.usp_AddNewPrayerComment(QueueActionGUID, (long?)user.ID, long.Parse(p.OwnerPrayerID), p.Comment, p.CreatedWhen, p.TouchedWhen, ref res, ref CommentID);
                 if (res.ToUpper() == "OK")
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + CommentID.ToString() });
                 else
@@ -503,7 +532,7 @@ namespace PenYourPrayerServer.Controllers
                 try
                 {
                     String res = "";
-                    db.usp_DeletePrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(CommentID), ref res);
+                    db.usp_DeletePrayerComment(QueueActionGUID, (long?)user.ID, long.Parse(CommentID), ref res);
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
 
                 }
@@ -521,7 +550,7 @@ namespace PenYourPrayerServer.Controllers
             using (DBDataContext db = new DBDataContext())
             {
                 String res = "";               
-                db.usp_UpdatePrayerComment(QueueActionGUID, (long?)user.Id, long.Parse(p.CommentID), p.Comment, p.TouchedWhen, ref res);
+                db.usp_UpdatePrayerComment(QueueActionGUID, (long?)user.ID, long.Parse(p.CommentID), p.Comment, p.TouchedWhen, ref res);
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
@@ -534,7 +563,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 long? AmenID = -1;
                 String res = "";       
-                db.usp_AddNewPrayerAmen(QueueActionGUID, (long?)user.Id, long.Parse(PrayerID), ref res, ref AmenID);
+                db.usp_AddNewPrayerAmen(QueueActionGUID, (long?)user.ID, long.Parse(PrayerID), ref res, ref AmenID);
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
@@ -548,7 +577,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 long? AmenID = -1;
                 String res = "";
-                db.usp_DeletePrayerAmen(QueueActionGUID, (long?)user.Id, long.Parse(PrayerID));
+                db.usp_DeletePrayerAmen(QueueActionGUID, (long?)user.ID, long.Parse(PrayerID));
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK" });
             }
         }
@@ -561,7 +590,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 long? AnsweredID = -1;
-                db.usp_AddNewPrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(p.OwnerPrayerID), p.Answered, p.CreatedWhen, p.TouchedWhen, ref res, ref AnsweredID);
+                db.usp_AddNewPrayerAnswered(QueueActionGUID, (long?)user.ID, long.Parse(p.OwnerPrayerID), p.Answered, p.CreatedWhen, p.TouchedWhen, ref res, ref AnsweredID);
                 if (res.ToUpper() == "OK")
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + AnsweredID.ToString() });
                 else
@@ -576,7 +605,7 @@ namespace PenYourPrayerServer.Controllers
             using (DBDataContext db = new DBDataContext())
             {
                 String res = "";
-                db.usp_UpdatePrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(p.AnsweredID), p.Answered, p.TouchedWhen, ref res);
+                db.usp_UpdatePrayerAnswered(QueueActionGUID, (long?)user.ID, long.Parse(p.AnsweredID), p.Answered, p.TouchedWhen, ref res);
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
             }
         }
@@ -591,7 +620,7 @@ namespace PenYourPrayerServer.Controllers
                 try
                 {
                     String res = "";
-                    db.usp_DeletePrayerAnswered(QueueActionGUID, (long?)user.Id, long.Parse(AnsweredID), ref res);
+                    db.usp_DeletePrayerAnswered(QueueActionGUID, (long?)user.ID, long.Parse(AnsweredID), ref res);
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
 
                 }
@@ -610,7 +639,7 @@ namespace PenYourPrayerServer.Controllers
             {
                 String res = "";
                 long? PrayerRequestID = -1;
-                db.usp_AddNewPrayerRequest(QueueActionGUID, (long?)user.Id, p.Subject, p.Description, p.CreatedWhen, p.TouchedWhen, ref res, ref PrayerRequestID);
+                db.usp_AddNewPrayerRequest(QueueActionGUID, (long?)user.ID, p.Subject, p.Description, p.CreatedWhen, p.TouchedWhen, ref res, ref PrayerRequestID);
                 if (res.ToUpper() != "OK")                    
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
 
@@ -621,14 +650,14 @@ namespace PenYourPrayerServer.Controllers
                     {
                         long? attachmentID = -1;
                         string extension = att.FileName.Substring(att.FileName.LastIndexOf('.'));
-                        string fileFrom = QuickReference.PrayerAttachmentImageTemp + @"\" + user.Id.ToString() + @"\" + att.GUID + extension;
-                        string fileTo = QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString() + @"\" + att.GUID + extension;
-                        if (!System.IO.Directory.Exists(QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString()))
-                            System.IO.Directory.CreateDirectory(QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString());
+                        string fileFrom = QuickReference.PrayerAttachmentImageTemp + @"\" + user.ID.ToString() + @"\" + att.GUID + extension;
+                        string fileTo = QuickReference.PrayerAttachmentImage + @"\" + user.ID.ToString() + @"\" + att.GUID + extension;
+                        if (!System.IO.Directory.Exists(QuickReference.PrayerAttachmentImage + @"\" + user.ID.ToString()))
+                            System.IO.Directory.CreateDirectory(QuickReference.PrayerAttachmentImage + @"\" + user.ID.ToString());
                         if (System.IO.File.Exists(fileFrom))
                         {
                             System.IO.File.Move(fileFrom, fileTo);
-                            db.usp_AddNewPrayerRequestAttachment(PrayerRequestID, att.GUID + extension, att.OriginalFilePath, (long?)user.Id, ref attachmentID);
+                            db.usp_AddNewPrayerRequestAttachment(PrayerRequestID, att.GUID + extension, att.OriginalFilePath, (long?)user.ID, ref attachmentID);
                         }
                         else
                         {
@@ -655,9 +684,9 @@ namespace PenYourPrayerServer.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "NOTEXISTS-" + p.PrayerRequestID });
                 }
                 if(p.Answered)
-                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, p.AnsweredWhen, p.TouchedWhen, ref res);
+                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.ID, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, p.AnsweredWhen, p.TouchedWhen, ref res);
                 else
-                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.Id, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, null, p.TouchedWhen, ref res);
+                    db.usp_UpdatePrayerRequest(QueueActionGUID, (long?)user.ID, PrayerRequestID, p.Subject, p.Description, p.Answered, p.AnswerComment, null, p.TouchedWhen, ref res);
                 if (res.ToUpper() != "OK")
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
 
@@ -690,7 +719,7 @@ namespace PenYourPrayerServer.Controllers
             List<PrayerRequest> newPrayerRequest = new List<PrayerRequest>();
             using (DBDataContext db = new DBDataContext())
             {
-                List<usp_GetLatestPrayerRequestResult> res = db.usp_GetLatestPrayerRequest(user.Id, id).ToList();
+                List<usp_GetLatestPrayerRequestResult> res = db.usp_GetLatestPrayerRequest(user.ID, id).ToList();
                 foreach (usp_GetLatestPrayerRequestResult f in res)
                 {
 
@@ -722,7 +751,7 @@ namespace PenYourPrayerServer.Controllers
                 try
                 {
                     String res = "";
-                    db.usp_DeletePrayerRequest(QueueActionGUID, (long?)user.Id, long.Parse(PrayerRequestID), ref res);
+                    db.usp_DeletePrayerRequest(QueueActionGUID, (long?)user.ID, long.Parse(PrayerRequestID), ref res);
                     return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
 
                 }

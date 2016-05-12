@@ -56,14 +56,14 @@ namespace PenYourPrayerServer.Controllers
                 long? id = -1;
                 string verificationCode = "";
                 db.usp_AddNewUser(user.LoginType, user.UserName, user.DisplayName, user.ProfilePictureURL, user.Password, user.MobilePlatform, user.PushNotificationID, HMACSecretKey, user.Country, user.Region, user.City, ref result, ref id, ref verificationCode);
-                user.Id = (long)id;
+                user.ID = (long)id;
 
                 if (result.ToUpper() != "OK")
                 {                    
                     return Request.CreateResponse(HttpStatusCode.BadRequest, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.BadRequest, Description = result });
                 }
                 //send email to verify email address.
-                CommonMethod.sendAccountActiviationEmail(user.UserName, user.DisplayName, verificationCode, user.Id.ToString());
+                CommonMethod.sendAccountActiviationEmail(user.UserName, user.DisplayName, verificationCode, user.ID.ToString());
                 return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK });
 
             }
@@ -168,7 +168,7 @@ namespace PenYourPrayerServer.Controllers
                         db.usp_UpdateUserSocialInformation(t.ID, tuser.DisplayName, tuser.UserName, tuser.ProfilePictureURL);
 
                         user = new PenYourPrayerUser();
-                        user.Id = t.ID;
+                        user.ID = t.ID;
                         user.DisplayName = tuser.DisplayName;
                         user.LoginType = t.LoginType;
                         user.UserName = t.UserName;
@@ -188,7 +188,7 @@ namespace PenYourPrayerServer.Controllers
                         db.usp_AddNewUser(LoginType, UserName, tuser.DisplayName, tuser.ProfilePictureURL, "", MobilePlatform, PushNotificationID, HMACSecretKey, null, null, null, ref result, ref id, ref verificationCode);
 
                         user = new PenYourPrayerUser();
-                        user.Id = (long)id;
+                        user.ID = (long)id;
                         user.DisplayName = tuser.DisplayName;
                         user.LoginType = LoginType;
                         user.UserName = UserName;
@@ -216,7 +216,7 @@ namespace PenYourPrayerServer.Controllers
                     db.usp_UpdateUserMobileDeviceInformation(t.ID, MobilePlatform, PushNotificationID);
                     
                     PenYourPrayerUser user = new PenYourPrayerUser();
-                    user.Id = t.ID;
+                    user.ID = t.ID;
                     user.DisplayName = t.DisplayName;
                     user.LoginType = t.LoginType;
                     user.UserName = t.UserName;

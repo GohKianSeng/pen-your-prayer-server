@@ -30,7 +30,7 @@ namespace PenYourPrayerServer.Controllers
             List<Friends> newfriend = new List<Friends>();
             using (DBDataContext db = new DBDataContext())
             {
-                List<usp_GetLatestFriendsResult> res = db.usp_GetLatestFriends(user.Id, userid).ToList();
+                List<usp_GetLatestFriendsResult> res = db.usp_GetLatestFriends(user.ID, userid).ToList();
                 foreach (usp_GetLatestFriendsResult f in res)
                 {
                     newfriend.Add((Friends)f);

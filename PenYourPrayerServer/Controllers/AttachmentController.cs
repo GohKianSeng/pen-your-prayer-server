@@ -32,7 +32,7 @@ namespace PenYourPrayerServer.Controllers
                     var postedFile = httpRequest.Files[file];
                     string extension = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                     filename = filename + extension;
-                    String directoryTosave = QuickReference.PrayerAttachmentImageTemp + @"\" + user.Id.ToString();
+                    String directoryTosave = QuickReference.PrayerAttachmentImageTemp + @"\" + user.ID.ToString();
                     if (!System.IO.Directory.Exists(directoryTosave))
                         System.IO.Directory.CreateDirectory(directoryTosave);
                     savepath = directoryTosave + @"\" + filename;
@@ -57,8 +57,8 @@ namespace PenYourPrayerServer.Controllers
             string savepath2 = "";
             filename = GUID + filename.Substring(filename.LastIndexOf('.'));
             
-            String directoryTosave1 = QuickReference.PrayerAttachmentImageTemp + @"\" + user.Id.ToString();
-            String directoryTosave2 = QuickReference.PrayerAttachmentImage + @"\" + user.Id.ToString();
+            String directoryTosave1 = QuickReference.PrayerAttachmentImageTemp + @"\" + user.ID.ToString();
+            String directoryTosave2 = QuickReference.PrayerAttachmentImage + @"\" + user.ID.ToString();
             if (!System.IO.Directory.Exists(directoryTosave1))
                 System.IO.Directory.CreateDirectory(directoryTosave1);
 

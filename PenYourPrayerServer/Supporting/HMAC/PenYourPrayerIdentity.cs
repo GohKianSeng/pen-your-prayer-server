@@ -9,7 +9,7 @@ namespace PenYourPrayerServer.Supporting.HMAC
 
     public class PenYourPrayerIdentity : GenericIdentity
     {
-        public long Id { get; set; }
+        public long ID { get; set; }
         public string LoginType { get; set; }
         public string UserName { get; set; }
         public string DisplayName { get; set; }
@@ -25,7 +25,7 @@ namespace PenYourPrayerServer.Supporting.HMAC
         {
             this.LoginType = LoginType;
             this.UserName = UserName;
-            this.Id = GUID;
+            this.ID = GUID;
         }        
 
     }

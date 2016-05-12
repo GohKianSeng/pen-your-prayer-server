@@ -186,24 +186,6 @@
       <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.usp_GetLatestPrayers" Method="usp_GetLatestPrayers">
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
-    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
-    <ElementType Name="usp_GetLatestPrayersResult">
-      <Column Name="TouchedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="PrayerID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Answers" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Amen" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.usp_GetPrayerAttachmentInformation" Method="usp_GetPrayerAttachmentInformation">
     <Parameter Name="AttachmentID" Parameter="attachmentID" Type="System.Int64" DbType="BigInt" />
     <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
@@ -305,6 +287,24 @@
     <Parameter Name="PushNotificationID" Parameter="pushNotificationID" Type="System.String" DbType="VarChar(200)" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_GetLatestFriendsPrayers" Method="usp_GetLatestFriendsPrayers">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_GetLatestFriendsPrayersResult">
+      <Column Name="TouchedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PrayerID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="OwnerProfile" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Answers" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Amen" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.usp_GetLatestOthersPrayers" Method="usp_GetLatestOthersPrayers">
     <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
     <ElementType Name="usp_GetLatestOthersPrayersResult">
@@ -315,6 +315,26 @@
       <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="OwnerProfile" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Answers" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Amen" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetLatestPrayers" Method="usp_GetLatestPrayers">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_GetLatestPrayersResult">
+      <Column Name="TouchedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PrayerID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="OwnerProfile" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
       <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
       <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
       <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
@@ -333,23 +353,7 @@
       <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Answers" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Amen" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.usp_GetLatestFriendsPrayers" Method="usp_GetLatestFriendsPrayers">
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
-    <ElementType Name="usp_GetLatestFriendsPrayersResult">
-      <Column Name="TouchedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="PrayerID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="OwnerProfile" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
       <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
       <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
       <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
@@ -361,18 +365,7 @@
     <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
     <Parameter Name="LastPrayerID" Parameter="lastPrayerID" Type="System.Int64" DbType="BigInt" />
     <ElementType Name="usp_GetPastFriendsPrayersResult">
-      <Column Name="TouchedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="PrayerID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Answers" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
-      <Column Name="Amen" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
