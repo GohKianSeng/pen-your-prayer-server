@@ -365,7 +365,31 @@
     <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
     <Parameter Name="LastPrayerID" Parameter="lastPrayerID" Type="System.Int64" DbType="BigInt" />
     <ElementType Name="usp_GetPastFriendsPrayersResult">
+      <Column Name="TouchedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedWhen" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="PrayerID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="PrayerContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PublicView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="QueueActionGUID" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="OwnerProfile" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="TagFriends" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Attachments" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Comment" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Answers" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
+      <Column Name="Amen" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.usp_AddNewPrayerCommentReply" Method="usp_AddNewPrayerCommentReply">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="PrayerID" Parameter="prayerID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="MainCommentID" Parameter="mainCommentID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="CommentReply" Parameter="commentReply" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="CreatedWhen" Parameter="createdWhen" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="TouchedWhen" Parameter="touchedWhen" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Parameter Name="CommentReplyID" Parameter="commentReplyID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

@@ -506,6 +506,22 @@ namespace PenYourPrayerServer.Controllers
             }
         }
 
+        [Route("AddNewPrayerCommentReply")]
+        public HttpResponseMessage AddNewPrayerCommentReply(string QueueActionGUID, string PrayerID, string MainCommentID, PrayerCommentReply p)
+        {
+            PenYourPrayerIdentity user = (PenYourPrayerIdentity)User.Identity;
+            using (DBDataContext db = new DBDataContext())
+            {
+                String res = "";
+                long? CommentReplyID = -1;
+                db.usp_AddNewPrayerCommentReply(QueueActionGUID, (long?)user.ID, long.Parse(p.OwnerPrayerID), long.Parse(MainCommentID), p.CommentReply, p.CreatedWhen, p.TouchedWhen, ref res, ref CommentReplyID);
+                if (res.ToUpper() == "OK")
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = "OK-" + CommentReplyID.ToString() });
+                else
+                    return Request.CreateResponse(HttpStatusCode.OK, new CustomResponseMessage() { StatusCode = (int)HttpStatusCode.OK, Description = res });
+            }
+        }
+
         [Route("AddNewPrayerComment")]
         public HttpResponseMessage AddNewPrayerComment(string QueueActionGUID, string PrayerID, PrayerComment p)
         {

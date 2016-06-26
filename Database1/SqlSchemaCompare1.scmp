@@ -8,7 +8,7 @@
   </SourceModelProvider>
   <TargetModelProvider>
     <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=WOAD.arvixe.com;Initial Catalog=pypdb;Persist Security Info=True;User ID=pypdbuser;Pooling=False</ConnectionString>
+      <ConnectionString>Data Source=WOAD.arvixe.com;Initial Catalog=pypdb;Persist Security Info=True;User ID=pypdbuser;Pooling=False;MultipleActiveResultSets=False</ConnectionString>
     </ConnectionBasedModelProvider>
   </TargetModelProvider>
   <SchemaCompareSettingsService>
@@ -29,7 +29,7 @@
       </PropertyElementName>
       <PropertyElementName>
         <Name>AllowIncompatiblePlatform</Name>
-        <Value>False</Value>
+        <Value>True</Value>
       </PropertyElementName>
       <PropertyElementName>
         <Name>BackupDatabaseBeforeChanges</Name>

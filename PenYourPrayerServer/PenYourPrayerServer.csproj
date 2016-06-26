@@ -179,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Struct\PrayerAmen.cs" />
+    <Compile Include="Models\Struct\PrayerCommentReply.cs" />
     <Compile Include="Models\Struct\PrayerRequestAttachment.cs" />
     <Compile Include="Models\Struct\PrayerRequest.cs" />
     <Compile Include="Models\Struct\PrayerAnswered.cs" />

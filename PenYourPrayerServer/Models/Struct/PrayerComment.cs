@@ -19,6 +19,9 @@ namespace PenYourPrayerServer.Models.Struct
         public string Comment { get; set; }
         public long CreatedWhen;
         public long TouchedWhen;
+
+        [XmlElement("CommentReply")]
+        public List<PrayerCommentReply> commentReply { get; set; }
     }
 
     [XmlRootAttribute("AllComments")]
