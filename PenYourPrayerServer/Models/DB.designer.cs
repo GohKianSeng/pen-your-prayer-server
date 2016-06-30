@@ -363,6 +363,22 @@ namespace PenYourPrayerServer.Models
 			commentReplyID = ((System.Nullable<long>)(result1.GetParameterValue(8)));
 			return ((int)(result1.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_DeletePrayerCommentReply")]
+		public int usp_DeletePrayerCommentReply([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CommentReplyID", DbType="BigInt")] System.Nullable<long> commentReplyID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, commentReplyID, result);
+			result = ((string)(result1.GetParameterValue(3)));
+			return ((int)(result1.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.usp_UpdatePrayerCommentReply")]
+		public int usp_UpdatePrayerCommentReply([global::System.Data.Linq.Mapping.ParameterAttribute(Name="QueueActionGUID", DbType="VarChar(128)")] string queueActionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="BigInt")] System.Nullable<long> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CommentReplyID", DbType="BigInt")] System.Nullable<long> commentReplyID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CommentReply", DbType="NVarChar(MAX)")] string commentReply, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TouchedWhen", DbType="BigInt")] System.Nullable<long> touchedWhen, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Result", DbType="VarChar(100)")] ref string result)
+		{
+			IExecuteResult result1 = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), queueActionGUID, userID, commentReplyID, commentReply, touchedWhen, result);
+			result = ((string)(result1.GetParameterValue(5)));
+			return ((int)(result1.ReturnValue));
+		}
 	}
 	
 	public partial class usp_aaaaa_mustdeleteTemporaryTestingResult

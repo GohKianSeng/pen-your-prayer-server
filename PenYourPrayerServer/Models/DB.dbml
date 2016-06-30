@@ -392,4 +392,20 @@
     <Parameter Name="CommentReplyID" Parameter="commentReplyID" Type="System.Int64" DbType="BigInt" Direction="InOut" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.usp_DeletePrayerCommentReply" Method="usp_DeletePrayerCommentReply">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="CommentReplyID" Parameter="commentReplyID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UpdatePrayerCommentReply" Method="usp_UpdatePrayerCommentReply">
+    <Parameter Name="QueueActionGUID" Parameter="queueActionGUID" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="CommentReplyID" Parameter="commentReplyID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="CommentReply" Parameter="commentReply" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="TouchedWhen" Parameter="touchedWhen" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="Result" Parameter="result" Type="System.String" DbType="VarChar(100)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>
